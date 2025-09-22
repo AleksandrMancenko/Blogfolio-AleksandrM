@@ -1,0 +1,61 @@
+.box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #1e40af; /* как на макете */
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.08s ease;
+}
+
+.box:not(:disabled):hover {
+  filter: brightness(0.95);
+}
+.box:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+/* три полоски */
+.icon {
+  position: relative;
+  width: 34px;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.icon::before,
+.icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 34px;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.2s ease;
+}
+
+.icon::before {
+  transform: translateY(-10px);
+}
+.icon::after {
+  transform: translateY(10px);
+}
+
+/* pressed → превращаемся в “X” */
+.box[aria-pressed='true'] .icon {
+  background-color: transparent;
+}
+.box[aria-pressed='true'] .icon::before {
+  transform: translateY(0) rotate(45deg);
+}
+.box[aria-pressed='true'] .icon::after {
+  transform: translateY(0) rotate(-45deg);
+}
