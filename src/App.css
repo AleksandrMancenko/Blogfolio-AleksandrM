@@ -1,6 +1,14 @@
-.Wrapper {
-  width: 100px;
-  height: 100px;
-  border: 2px solid green;
-  margin: 20px;
+.container {
+  max-width: 1040px;
+  margin: 0;
+  padding: 24px 16px;
+}
+.section { margin-top: 24px; }
+.cardsGrid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  justify-content: start;
+  justify-items: stretch;
 }

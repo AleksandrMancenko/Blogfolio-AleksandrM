@@ -1,0 +1,40 @@
+.wrap {
+  display: flex;
+  gap: 32px;                /* расстояние как в макете */
+  align-items: flex-end;
+  border-bottom: 1px solid #e5e7eb; /* gray-200 линия под табами */
+  padding: 8px 0;
+}
+
+.stretch { justify-content: space-between; }
+
+.tab {
+  position: relative;
+  background: transparent;
+  border: 0;
+  padding: 8px 0;
+  font-size: 16px;
+  color: #374151;           /* gray-700 */
+  cursor: pointer;
+}
+
+.tab:hover { color: #1d4ed8; }     /* hover (синяя ссылка) */
+.tab:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.25);
+  border-radius: 4px;
+}
+
+.active { color: #111827; }        /* активный — темнее */
+.active::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  bottom: -1px;                     /* поверх нижней линии */
+  height: 3px;
+  background: #374151;              /* тёмная полоса под активным табом */
+  border-radius: 2px;
+}
+
+.disabled { color: #9ca3af; cursor: default; }
+.disabled:hover { color: #9ca3af; } /* без hover-цвета */
