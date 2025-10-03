@@ -1,6 +1,6 @@
 export type Post = {
     id: number;
-    image?: string | null;
+    image?: string;
     text: string;
     date: string;
     lesson_num: number;

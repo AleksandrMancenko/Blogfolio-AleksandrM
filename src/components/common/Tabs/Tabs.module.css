@@ -1,40 +1,47 @@
-.wrap {
-  display: flex;
-  gap: 32px;                /* расстояние как в макете */
-  align-items: flex-end;
-  border-bottom: 1px solid #e5e7eb; /* gray-200 линия под табами */
-  padding: 8px 0;
-}
-
-.stretch { justify-content: space-between; }
-
-.tab {
+/* Длинный СВЕТЛЫЙ трек на всю ширину контейнера табов */
+.tabs{
   position: relative;
-  background: transparent;
-  border: 0;
-  padding: 8px 0;
-  font-size: 16px;
-  color: #374151;           /* gray-700 */
-  cursor: pointer;
+  display: flex;
+  gap: 24px;
+  width: 100%;
+  padding-bottom: 12px;                 /* место под трек/индикатор */
+}
+/* .tabs::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:0;
+  height:1px;
+  background: var(--border, #E5E7EB);
+  pointer-events:none;
+} */
+
+/* Кнопки табов */
+.tabBtn{
+  background:none;
+  border:0;
+  padding:0;
+  color: var(--muted, #6B7280);
+  cursor:pointer;
+}
+.tabBtn[aria-selected="true"]{
+  color: var(--text, #111827);
+  font-weight:600;
 }
 
-.tab:hover { color: #1d4ed8; }     /* hover (синяя ссылка) */
-.tab:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(59,130,246,.25);
-  border-radius: 4px;
+/* Текст — якорь индикатора */
+.label{
+  position:relative;
+  display:inline-block;
+  padding-bottom: 10px;                 /* визуальный отступ */
+  line-height: 1.2;
 }
 
-.active { color: #111827; }        /* активный — темнее */
-.active::after {
-  content: "";
-  position: absolute;
-  left: 0; right: 0;
-  bottom: -1px;                     /* поверх нижней линии */
-  height: 3px;
-  background: #374151;              /* тёмная полоса под активным табом */
+/* ТЁМНЫЙ индикатор поверх трека (перекрывает его) */
+.tabBtn[aria-selected="true"] .label::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:0;            /* ровно на треке */
+  height:2px;
+  background: var(--text, #111827);
   border-radius: 2px;
 }
-
-.disabled { color: #9ca3af; cursor: default; }
-.disabled:hover { color: #9ca3af; } /* без hover-цвета */
