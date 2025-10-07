@@ -3,7 +3,7 @@
   display: grid;
   gap: 12px;
   padding: 16px;
-  border: 1px solid #e5e7eb;
+  /* border: 1px solid #e5e7eb; */
   border-radius: 8px;
   background: #fff;
   align-self: start;
@@ -83,9 +83,28 @@
 
 /* ===== VERTICAL ===== */
 .vertical { grid-template-columns: 1fr; justify-items: stretch; }
-.vertical .media { aspect-ratio: 4 / 3; }
-.vertical .actions { grid-column: 1; }
+.vertical .media { aspect-ratio: 16 / 9; }     /* фиксируем картинку */
+.vertical .title, .vertical .titleLink {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;                       /* заголовок максимум 2 строки */
+  line-clamp: 2;
+  overflow: hidden;
+}
+.vertical .text {
+  -webkit-line-clamp: 2;                       /* описание максимум 2 строки */
+  line-clamp: 2;
+}
+/* правая колонка: только нижний разделитель, без «доп. линий» сверху */
+.rightRow{
+  display:block;
+  padding:14px 0;
+  border-bottom:1px solid var(--border, #E5E7EB);
+}
+.rightItem:last-child .rightRow{ border-bottom:0; }
 
+/* мелкая подстройка, чтобы линии по сетке смотрелись ровно */
+.rightList{ margin-top:2px; }   /* компенсирует толщину бордеров слева/справа */
 /* ===== COMPACT (плотный) ===== */
 .compact {
   padding: 12px;                 /* меньше паддинги */
