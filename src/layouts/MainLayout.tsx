@@ -1,29 +1,37 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import styles from "./MainLayout.module.css";
+import Header from "../components/common/Header/Header";
+import OverlayMenu from "../components/common/OverlayMenu/OverlayMenu";
+import { useEffect } from "react";
+import { useAppSelector } from "../store/hooks";
+import { selectMenuOpen, selectTheme } from "../features/ui/uiSlice";
 
 export default function MainLayout () {
-    const { pathname } = useLocation();
-    const isAuth = pathname === "/signin" || pathname === "/success";
+  const { pathname } = useLocation();
+  const isAuth = /^\/(signin|signup|success)(\/|$)/.test(pathname);
+  const menuOpen = useAppSelector(selectMenuOpen);
+  const theme    = useAppSelector(selectTheme);
 
-    return (
-        <div className={`${styles.app} ${isAuth ? styles.auth : ""}`}>
-            <header className={styles.header}>
-              <div className={styles.headerInner}>
-                <Link to="/" className={styles.logo}>Blog</Link>
-              </div>
-            </header>
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
 
-            <main className={styles.main}>
-                <Outlet />
-            </main>
+  return (
+    <div className={`${styles.app} ${isAuth ? styles.isAuth : ""}`}>
+      <Header />
 
-            <footer className={styles.footer}>
-                <div className={styles.footerRow}>
-                    <small>© {new Date().getFullYear()} Blogfolio</small>
-                    <small>All rights reserved</small>
-                </div>            
-            </footer>
+      <main className={styles.main}>
+        <Outlet />
+      </main>
+
+      <footer className={styles.footer}>
+        <div className={styles.footerRow}>
+          <small>© {new Date().getFullYear()} Blogfolio</small>
+          <small>All rights reserved</small>
         </div>
-    );
+      </footer>
 
+      <OverlayMenu open={menuOpen} />
+    </div>
+  );
 }

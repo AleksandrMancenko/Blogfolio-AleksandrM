@@ -3,12 +3,16 @@
   --ftr:48px;
 }
 
-/* каркас приложения */
-.app{ display:flex; flex-direction:column; min-height:100svh; }
+.app{
+  display:flex;
+  flex-direction:column;
+  min-height:100dvh;           /* dvh стабильнее на мобильных */
+}
 
-/* серый фон на ВЕСЬ экран только для auth-страниц */
-.auth{ background:#f3f4f6; }
-
+/* Серый фон ТОЛЬКО под основным контентом на auth-страницах */
+.isAuth .main{
+  background:#f3f4f6;
+}
 /* всё остальное как было через composes */
 .header      { composes: app__header from "../index.css"; }
 .headerInner { composes: app__header-inner from "../index.css"; }
