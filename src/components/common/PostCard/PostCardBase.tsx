@@ -2,6 +2,8 @@ import React from "react";
 import styles from "./PostCard.module.css";
 import type { Post } from "./PostCard.types";
 import { LikeIcon, DislikeIcon, BookmarkIcon, MoreIcon } from "./icons";
+import { useAppDispatch } from "../../../store/hooks";
+import { openSingle } from "../../../features/preview/previewSlice";
 
 type Variant = "wide" | "vertical" | "compact";
 
@@ -13,13 +15,21 @@ type Props = {
 };
 
 export default function PostCardBase({ post, variant, href, onBookmarkToggle }: Props) {
-  const hasImage = !!post.image;
+  const dispatch = useAppDispatch();
+  // const hasImage = Boolean(post.image);
 
-  const Media = hasImage ? (
-    <div className={styles.media}>
-      <img src={post.image as string} alt={post.title} loading="lazy" />
-    </div>
-  ) : (
+  const openPreview = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!post.image) return;
+    dispatch(openSingle({ src: post.image as string, href }));
+  };
+
+  const Media = Boolean(post.image) ? (
+    <button type="button" className={`${styles.media} ${styles.mediaBtn}`} onClick={openPreview} aria-label="Open image preview">
+          <img src={post.image as string} alt={post.title} loading="lazy" />
+        </button>      
+        ) : (
     <div className={`${styles.media} ${styles.placeholder}`} aria-hidden="true" />
   );
 
@@ -72,20 +82,20 @@ const Actions = (
 
   return (
     <article className={`${styles.card} ${styles[variant]}`}>
-        {rightSided ? (<>{Content}{Media}</>) : (<>{Media}{Content}</>)} 
+ {rightSided ? (
+        <>
+          {Content}
+          {Media}
+        </>
+      ) : (
+        <>
+          {Media}
+          {Content}
+        </>
+      )}
 
-        <div className={styles.actions}>
-        <div className={styles.actionsLeft}>
-        <button className={styles.iconBtn} aria-label="Like"><LikeIcon className={styles.icon}/></button>
-        <button className={styles.iconBtn} aria-label="Dislike"><DislikeIcon className={styles.icon}/></button>
-        </div>
-        <div className={styles.actionsRight}>
-        <button className={styles.iconBtn} aria-label="Bookmark"><BookmarkIcon className={styles.icon}/></button>
-        <button className={styles.iconBtn} aria-label="More"><MoreIcon className={styles.icon}/></button>
-        </div>
-    </div>
-
-    <div className={styles.divider}/>    
-  </article>
+      {Actions}
+      <div className={styles.divider} />
+    </article>
   );
 }
