@@ -2,6 +2,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import styles from "./MainLayout.module.css";
 import Header from "../components/common/Header/Header";
 import OverlayMenu from "../components/common/OverlayMenu/OverlayMenu";
+import ImagePreview from "../components/common/ImagePreview/ImagePreview";
 import { useEffect } from "react";
 import { useAppSelector } from "../store/hooks";
 import { selectMenuOpen, selectTheme } from "../features/ui/uiSlice";
@@ -32,6 +33,7 @@ export default function MainLayout () {
       </footer>
 
       <OverlayMenu open={menuOpen} />
+      <ImagePreview />
     </div>
   );
 }
