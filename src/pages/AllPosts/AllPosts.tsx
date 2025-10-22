@@ -5,6 +5,7 @@ import styles from "./AllPosts.module.css";
 import { useEffect, useMemo, useState } from "react";
 import { listArticles } from "../../api/spaceflight";
 import { articleToPost } from "../mappers";
+import { useAppSelector } from "../../store/hooks";
 
 const items: TabItem[] = [
   { value: "all", label: "All" },
@@ -12,32 +13,44 @@ const items: TabItem[] = [
   { value: "pop", label: "Popular" },
 ];
 
-// ★ сколько хотим слева/справа
-const LEFT_COUNT = 6;
-const RIGHT_COUNT = 7;
-
 export default function AllPosts(){
   const [tab, setTab] = useState("all");
   const [posts, setPosts] = useState<Post[] | null>(null);
   const [err, setErr] = useState<string | null>(null);
+  const query = useAppSelector((s) => s.search.query).trim().toLowerCase();
 
   useEffect(() => {
-    // ★ чуть больше элементов, чтобы обе колонки были плотными
-    listArticles(LEFT_COUNT + RIGHT_COUNT + 2)
+    listArticles(30)
       .then(r => setPosts(r.results.map(articleToPost)))
       .catch(e => setErr(String(e)));
   }, []);
 
-  const { featured, leftGrid, rightList } = useMemo(() => {
-    const arr = (posts ?? []).filter(p => !!p.image); // ★ на всякий — без пустых картинок
-    const f = arr[0];
-    const left = arr.slice(1, 1 + LEFT_COUNT);                      // ★ 6 вертикальных
-    const right = arr.slice(1 + LEFT_COUNT, 1 + LEFT_COUNT + RIGHT_COUNT); // ★ 12 компактных
-    return { featured: f, leftGrid: left, rightList: right };
-  }, [posts]);
+const filtered = useMemo(() => {
+    const arr = posts ?? [];
+    if (!query) return arr;
+    return arr.filter((p) =>
+      `${p.title} ${p.text}`.toLowerCase().includes(query)
+    );
+  }, [posts, query]);
 
-  if (err) return <div className={styles.page}><p>Failed to load: {err}</p></div>;
-  if (!posts) return <div className={styles.page}><p>Loading…</p></div>;
+const [featured, leftGrid, rightList] = useMemo(() => {
+    const arr = filtered;
+    return [arr[0] ?? null, arr.slice(1, 7), arr.slice(7, 15)];
+  }, [filtered]);
+
+  if (err)
+    return (
+      <div className={styles.page}>
+        <p>Failed to load: {err}</p>
+      </div>
+    );
+
+  if (!posts)
+    return (
+      <div className={styles.page}>
+        <p>Loading…</p>
+      </div>
+    );
 
   return (
     <div className={styles.page}>
@@ -48,37 +61,46 @@ export default function AllPosts(){
         </div>
       </header>
 
-      <div className={styles.layout}>
-        {/* Левая колонка */}
-        <section className={styles.colLeft}>
-          {featured && (
-            <Link to={`/posts/${featured.id}`} className={styles.cardLink}>
-              <PostCardWide post={featured}/>
-            </Link>
-          )}
-
-          <div className={styles.leftGrid}>
-            {leftGrid.map(p => (
-              <Link key={p.id} to={`/posts/${p.id}`} className={styles.cardLink}>
-                <PostCardVertical post={p}/>
+      {filtered.length === 0 ? (
+        <div style={{ padding: "24px 0" }}>
+          <p>No results for “{query}”.</p>
+        </div>
+      ) : (
+        <div className={styles.layout}>
+          {/* Левая колонка */}
+          <section className={styles.colLeft}>
+            {featured && (
+              <Link to={`/posts/${featured.id}`} className={styles.cardLink}>
+                <PostCardWide post={featured} />
               </Link>
-            ))}
-          </div>
-        </section>
+            )}
 
-        {/* Правая колонка */}
-        <aside className={styles.colRight}>
-          <ul className={styles.rightList}>
-            {rightList.map(p => (
-              <li key={p.id} className={styles.rightItem}>
-                <Link to={`/posts/${p.id}`} className={`${styles.cardLink} ${styles.rightRow}`}>
-                  <PostCardCompact post={p}/>
+            <div className={styles.leftGrid}>
+              {leftGrid.map((p) => (
+                <Link key={p.id} to={`/posts/${p.id}`} className={styles.cardLink}>
+                  <PostCardVertical post={p} />
                 </Link>
-              </li>
-            ))}
-          </ul>
-        </aside>
-      </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Правая колонка */}
+          <aside className={styles.colRight}>
+            <ul className={styles.rightList}>
+              {rightList.map((p, i) => (
+                <li key={`${p.id}-${i}`} className={styles.rightItem}>
+                  <Link
+                    to={`/posts/${p.id}`}
+                    className={`${styles.cardLink} ${styles.rightRow}`}
+                  >
+                    <PostCardCompact post={p} />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        </div>
+      )}
 
       <nav className={styles.pagination} aria-label="Pagination">
         <span className={styles.prev}>← Prev</span>

@@ -61,7 +61,7 @@ export default function SignIn() {
           </div>
 
           <div className={styles.note}>
-            Don’t have an account? <Link to="/signup">Sign Up</Link>
+            Don’t have an account? <Link to="/signup" className={styles.link}>Sign Up</Link>
           </div>
         </form>
       </div>
