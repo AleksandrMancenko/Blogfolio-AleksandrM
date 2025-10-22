@@ -7,6 +7,7 @@ export default function App() {
     <Routes>
       <Route element={<MainLayout />}>
         <Route path="/" element={<AllPosts />} />
+        <Route path="/favorites" element={<AllPosts />} />
         <Route path="/search" element={<Search />} />
         <Route path="/posts/:id" element={<SelectedPost />} />
         

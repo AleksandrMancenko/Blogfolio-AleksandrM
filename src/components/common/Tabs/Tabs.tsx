@@ -1,13 +1,7 @@
-import React from "react";
 import styles from "./Tabs.module.css";
 
 export type TabItem = { value: string; label: string };
-
-type Props = {
-  items: TabItem[];
-  value: string;
-  onChange: (v: string) => void;
-};
+type Props = { items: TabItem[]; value: string; onChange: (v: string) => void };
 
 export default function Tabs({ items, value, onChange }: Props) {
   return (
