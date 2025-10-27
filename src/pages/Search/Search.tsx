@@ -163,7 +163,7 @@ export default function Search() {
             
             <div className={styles.grid}>
               {posts.map((post) => (
-                <Link key={post.id} to={`/post/${post.id}`} className={styles.cardLink}>
+                <Link key={post.id} to={`/posts/${post.id}`} className={styles.cardLink}>
                   <PostCardBase
                     post={post}
                     variant="vertical"
