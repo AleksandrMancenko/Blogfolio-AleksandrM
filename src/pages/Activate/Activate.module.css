@@ -44,3 +44,10 @@
   text-decoration: underline;
 }
 
+.actions {
+  margin-top: 24px;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+

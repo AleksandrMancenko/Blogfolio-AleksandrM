@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import LoadingOverlay from '../../components/common/LoadingOverlay';
 import { useAppDispatch } from '../../store/hooks';
@@ -10,6 +10,8 @@ export default function Activate() {
   const { uid, token } = params;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!uid || !token) {
@@ -23,17 +25,29 @@ export default function Activate() {
       try {
         await dispatch(activateAccount({ uid, token })).unwrap();
         console.log('Activation successful, redirecting...');
+        setIsLoading(false);
         // Редирект на страницу успешной активации после небольшой задержки
         setTimeout(() => {
           navigate('/activate-success');
         }, 2000);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Activation failed:', error);
-        // Ошибка обрабатывается в Redux
-        // Через 3 секунды показываем сообщение об ошибке
-        setTimeout(() => {
-          alert('Activation failed. Please check your link or try again.');
-        }, 3000);
+        setIsLoading(false);
+        // Извлекаем сообщение об ошибке
+        let errorMessage = 'Activation failed. Please check your link or try again.';
+        try {
+          if (error.message && typeof error.message === 'string' && error.message.includes('Stale token')) {
+            errorMessage = 'This activation link has expired. Please register again.';
+          } else if (error.payload) {
+            const payload = error.payload;
+            if (typeof payload === 'string' && payload.includes('Stale token')) {
+              errorMessage = 'This activation link has expired. Please register again.';
+            } else {
+              errorMessage = payload;
+            }
+          }
+        } catch {}
+        setError(errorMessage);
       }
     };
 
@@ -58,8 +72,31 @@ export default function Activate() {
     );
   }
 
+  if (error) {
+    return (
+      <section className={styles.screen}>
+        <div className={styles.wrap}>
+          <div className={styles.error}>
+            <h1 className={styles.title}>Activation Failed</h1>
+            <p className={styles.message}>
+              {error}
+            </p>
+            <div className={styles.actions}>
+              <Link to="/signup" className={styles.link}>
+                Register Again
+              </Link>
+              <Link to="/" className={styles.link}>
+                Back to home
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <LoadingOverlay isLoading={true} message="Activating your account...">
+    <LoadingOverlay isLoading={isLoading} message="Activating your account...">
       <section className={styles.screen}>
         <div className={styles.wrap}>
           <div className={styles.content}>
