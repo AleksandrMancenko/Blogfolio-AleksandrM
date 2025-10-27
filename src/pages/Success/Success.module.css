@@ -1,37 +1,57 @@
-@import "../SignIn/SignIn.module.css";
+@import '../SignIn/SignIn.module.css';
 
 /* переиспользуем базовые стили с SignIn */
-.screen{ composes: screen from "../SignIn/SignIn.module.css"; }
-.wrap  { composes: wrap   from "../SignIn/SignIn.module.css"; }
-.back  { composes: back   from "../SignIn/SignIn.module.css"; }
-.title { composes: title  from "../SignIn/SignIn.module.css"; }
+.screen {
+  composes: screen from '../SignIn/SignIn.module.css';
+}
+.wrap {
+  composes: wrap from '../SignIn/SignIn.module.css';
+}
+.back {
+  composes: back from '../SignIn/SignIn.module.css';
+}
+.title {
+  composes: title from '../SignIn/SignIn.module.css';
+}
 
 /* Панель сообщения */
-.panel{
-  background:#fff;
-  border:1px solid #E5E7EB;
-  border-radius:8px;
-  padding:16px;
-  max-width:520px;
+.panel {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  max-width: 520px;
 }
 
-.noteTitle{ margin:0 0 4px; font-weight:700; color:#111827; }
-.noteText { margin:0 0 12px; color:#374151; }
+.noteTitle {
+  margin: 0 0 4px;
+  font-weight: 700;
+  color: #111827;
+}
+.noteText {
+  margin: 0 0 12px;
+  color: #374151;
+}
 
 /* Кнопка на ВЕСЬ внутренний размер панели */
-.actions{ display:block; margin-top:8px; }
-.btn{
-  display:block;
-  width:100%;
-  height:40px;
-  padding:0;                 /* чтобы не ломать 100% ширину */
-  text-align:center;
-
-  border-radius:6px;
-  background:#4f59c3;
-  color:#fff;
-  font-weight:600;
-  text-decoration:none;
-  line-height:40px;          /* вертикальное выравнивание текста */
+.actions {
+  display: block;
+  margin-top: 8px;
 }
-.btn:hover{ filter:brightness(0.95); }
+.btn {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 0; /* чтобы не ломать 100% ширину */
+  text-align: center;
+
+  border-radius: 6px;
+  background: #4f59c3;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  line-height: 40px; /* вертикальное выравнивание текста */
+}
+.btn:hover {
+  filter: brightness(0.95);
+}

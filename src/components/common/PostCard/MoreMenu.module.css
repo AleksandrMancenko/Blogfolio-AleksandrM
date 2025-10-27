@@ -1,0 +1,81 @@
+.container {
+  position: relative;
+  display: inline-block;
+}
+
+.moreBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.moreBtn:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+.dropdown {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 120px;
+  overflow: hidden;
+  animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+  position: relative;
+}
+
+.menuItem:hover {
+  background: var(--surface-hover);
+}
+
+.menuItem:active {
+  background: var(--surface-hover);
+}
+
+.menuItem:first-child {
+  border-radius: 8px 8px 0 0;
+}
+
+.menuItem:last-child {
+  border-radius: 0 0 8px 8px;
+}
+
+.menuItem svg {
+  flex-shrink: 0;
+}

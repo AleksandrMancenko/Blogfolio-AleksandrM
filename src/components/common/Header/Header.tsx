@@ -1,17 +1,38 @@
-import { Link } from "react-router-dom";
-import styles from "./Header.module.css";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { openMenu } from "../../../features/ui/uiSlice";
-import { setQuery } from "../../../features/search/searchSlice";
-import { FormEvent } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import styles from './Header.module.css';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { openMenu } from '../../../features/ui/uiSlice';
+import { setQuery } from '../../../features/search/searchSlice';
+import { addQuery } from '../../../features/search/searchHistorySlice';
+import SearchAutocomplete from '../SearchAutocomplete';
+import { FormEvent } from 'react';
 
 export default function Header() {
   const dispatch = useAppDispatch();
-  const query = useAppSelector(s => s.search.query);
+  const navigate = useNavigate();
+  const query = useAppSelector((s) => s.search.query);
 
   const onSubmit = (e: FormEvent) => {
-    e.preventDefault();              // не уходим со страницы
-    // здесь ничего не делаем — AllPosts сам отфильтрует по Redux-значению
+    e.preventDefault();
+    if (query.trim()) {
+      // Добавляем запрос в историю
+      dispatch(addQuery(query.trim()));
+      // Переходим на страницу поиска с запросом
+      navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+      // Очищаем поле поиска после перехода
+      dispatch(setQuery(''));
+    }
+  };
+
+  const handleSearchSubmit = () => {
+    if (query.trim()) {
+      // Добавляем запрос в историю
+      dispatch(addQuery(query.trim()));
+      // Переходим на страницу поиска с запросом
+      navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+      // Очищаем поле поиска после перехода
+      dispatch(setQuery(''));
+    }
   };
 
   return (
@@ -24,19 +45,23 @@ export default function Header() {
         onClick={() => dispatch(openMenu())}
       >
         <svg viewBox="0 0 24 24" className={styles.icon} aria-hidden="true">
-          <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <path
+            d="M4 6h16M4 12h16M4 18h16"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
         </svg>
       </button>
 
       {/* центр: форма поиска */}
       <form className={styles.search} role="search" onSubmit={onSubmit}>
-        <input
-          className={styles.searchInput}
-          type="text"
-          placeholder="Search…"
+        <SearchAutocomplete
           value={query}
-          onChange={(e) => dispatch(setQuery(e.target.value))}
-          aria-label="Search"
+          onChange={(value) => dispatch(setQuery(value))}
+          onSubmit={handleSearchSubmit}
+          placeholder="Search…"
+          className={styles.searchInput}
         />
         <button type="submit" className={styles.searchBtn} aria-label="Search">
           <svg
@@ -53,8 +78,8 @@ export default function Header() {
           >
             <circle cx="11" cy="11" r="7" />
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>        
-          </button>
+          </svg>
+        </button>
       </form>
 
       {/* справа: AM + имя */}

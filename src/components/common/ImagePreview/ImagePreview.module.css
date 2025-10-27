@@ -1,45 +1,70 @@
-.backdrop{
-  position:fixed; inset:0; z-index:60;
-  display:grid; place-items:center;
-  background: rgba(0,0,0,.6);
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.6);
 }
-.panel{
-  position:relative;
-  max-width:min(96vw,1200px);
-  max-height:90vh;
+.panel {
+  position: relative;
+  max-width: min(96vw, 1200px);
+  max-height: 90vh;
   background: var(--panel, #0b1020);
-  border-radius:12px;
-  padding:8px;
+  border-radius: 12px;
+  padding: 8px;
 }
-.img{
-  display:block;
-  max-width:100%;
-  max-height:80vh;
-  object-fit:contain;
-  border-radius:8px;
+.img {
+  display: block;
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 8px;
 }
-.close{
-  position:absolute; top:8px; right:8px;
-  width:32px; height:32px; border-radius:50%;
-  border:1px solid rgba(255,255,255,.4);
-  background: rgba(0,0,0,.35);
-  cursor:pointer;
+.close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.35);
+  cursor: pointer;
 }
-.ctrl{
-  position:absolute; top:50%; transform:translateY(-50%);
-  width:40px; height:40px; border-radius:50%;
-  border:0; background: rgba(0,0,0,.45); cursor:pointer;
+.ctrl {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(0, 0, 0, 0.45);
+  cursor: pointer;
 }
-.prev{ left:8px; }
-.next{ right:8px; }
-.counter{
-  position:absolute; left:50%; transform:translateX(-50%);
-  bottom:8px; padding:2px 8px; border-radius:999px;
-  background: rgba(0,0,0,.45); color:#fff; font-size:12px;
+.prev {
+  left: 8px;
+}
+.next {
+  right: 8px;
+}
+.counter {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 12px;
 }
 
 /* опционально чуть светлее панель в светлой теме */
-:global([data-theme="light"]) .panel{ --panel:#111827; }
+:global([data-theme='light']) .panel {
+  --panel: #111827;
+}
 
 .closeIcon {
   width: 18px;
