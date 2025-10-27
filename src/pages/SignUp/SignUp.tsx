@@ -2,6 +2,9 @@ import { useState, FormEvent, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
+import LoadingOverlay from '../../components/common/LoadingOverlay';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { registerNewUser, selectAuthLoading, selectAuthError } from '../../features/auth/authSlice';
 import styles from './SignUp.module.css';
 
 export default function SignUp() {
@@ -14,6 +17,9 @@ export default function SignUp() {
   const [passErr, setPassErr] = useState<string | undefined>();
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(selectAuthLoading);
+  const error = useAppSelector(selectAuthError);
 
   const canSubmit = useMemo(() => {
     const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -21,7 +27,7 @@ export default function SignUp() {
     return name.trim().length > 0 && okEmail && okPass;
   }, [name, email, pass, pass2]);
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     let ok = true;
@@ -37,19 +43,31 @@ export default function SignUp() {
 
     if (!ok) return;
 
-    // TODO: submit to API
-    navigate('/success', { state: { name } });
+    try {
+      await dispatch(registerNewUser({ email, username: name, password: pass })).unwrap();
+      // После успешной регистрации переходим на страницу подтверждения
+      navigate('/registration-confirmation');
+    } catch (error) {
+      // Ошибка уже обработана в Redux
+      console.error('Registration failed:', error);
+    }
   };
 
   return (
-    <section className={styles.screen}>
-      <div className={styles.wrap}>
-        <Link to="/" className={styles.back}>
-          Back to home
-        </Link>
-        <h1 className={styles.title}>Sign Up</h1>
+    <LoadingOverlay isLoading={isLoading} message="Registering...">
+      <section className={styles.screen}>
+        <div className={styles.wrap}>
+          <Link to="/" className={styles.back}>
+            Back to home
+          </Link>
+          <h1 className={styles.title}>Sign Up</h1>
 
-        <form className={styles.form} onSubmit={onSubmit} noValidate>
+          <form className={styles.form} onSubmit={onSubmit} noValidate>
+            {error && (
+              <div className={styles.errorMessage}>
+                {error}
+              </div>
+            )}
           <Input
             id="su-name"
             label="Name"
@@ -89,8 +107,8 @@ export default function SignUp() {
           />
 
           <div className={styles.submit}>
-            <Button type="submit" variant="primary" disabled={!canSubmit}>
-              Sign Up
+            <Button type="submit" variant="primary" disabled={!canSubmit || isLoading}>
+              {isLoading ? 'Signing Up...' : 'Sign Up'}
             </Button>
           </div>
 
@@ -100,5 +118,6 @@ export default function SignUp() {
         </form>
       </div>
     </section>
+    </LoadingOverlay>
   );
 }
