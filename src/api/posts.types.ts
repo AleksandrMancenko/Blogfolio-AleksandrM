@@ -1,36 +1,38 @@
 // Серверный DTO
 export type PostDto = {
   id: number;
-  image: string | null;        // на всякий случай допускаем null
+  image: string | null; // на всякий случай допускаем null
   text: string;
-  date: string;                // ISO date
+  date: string; // ISO date
   lesson_num: number;
   title: string;
   description: string;
   author: number;
 };
 
-// Наш UI-тип (можно оставить твой текущий Post)
+// Основной тип Post (определяем здесь, чтобы избежать циклических импортов)
 export type Post = {
   id: number;
-  image: string | null;
-  title: string;
-  text: string;                // по месту используешь как надо
+  image?: string;
+  text: string;
   date: string;
-  description: string;
-  lesson: number;
-  authorId: number;
+  lesson_num: number;
+  title: string;
+  author: number | string;
+  likes: number;
+  dislikes: number;
 };
 
 export function fromDto(dto: PostDto): Post {
   return {
     id: dto.id,
-    image: dto.image,
+    image: dto.image || undefined,
     title: dto.title,
-    text: dto.text,
+    text: dto.description || dto.text,
     date: dto.date,
-    description: dto.description,
-    lesson: dto.lesson_num,
-    authorId: dto.author,
+    lesson_num: dto.lesson_num,
+    author: dto.author,
+    likes: Math.floor(Math.random() * 200) + 10, // Генерируем случайные лайки для демо
+    dislikes: Math.floor(Math.random() * 20) + 1, // Генерируем случайные дизлайки для демо
   };
 }

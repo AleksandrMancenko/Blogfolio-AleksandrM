@@ -1,4 +1,4 @@
-import styles from "./Tabs.module.css";
+import styles from './Tabs.module.css';
 
 export type TabItem = { value: string; label: string };
 type Props = { items: TabItem[]; value: string; onChange: (v: string) => void };

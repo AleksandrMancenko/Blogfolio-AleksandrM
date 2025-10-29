@@ -3,7 +3,9 @@
   margin: 0;
   padding: 24px 16px;
 }
-.section { margin-top: 24px; }
+.section {
+  margin-top: 24px;
+}
 .cardsGrid {
   display: grid;
   gap: 16px;

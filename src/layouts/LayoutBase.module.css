@@ -1,5 +1,27 @@
-.app__header { background:#233c7b; color:#fff; }
-.app__headerInner { height:56px; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:0 24px; }
-.app__logo { color:#fff; text-decoration:none; font-weight:600; }
-.app__main { flex:1; padding:24px; max-width:1200px; margin:0 auto; }
-.app__footer { padding:16px 24px; color:#6B7280; }
+.app__header {
+  background: #233c7b;
+  color: #fff;
+}
+.app__headerInner {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 24px;
+}
+.app__logo {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+.app__main {
+  flex: 1;
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.app__footer {
+  padding: 16px 24px;
+  color: #6b7280;
+}

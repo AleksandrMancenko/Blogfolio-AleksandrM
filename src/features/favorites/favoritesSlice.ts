@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../../store";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from '../../store';
 
-const STORAGE_KEY = "favorites";
+const STORAGE_KEY = 'favorites';
 
 function load(): number[] {
   try {
@@ -24,7 +24,7 @@ type State = { ids: number[] };
 const initial: State = { ids: load() };
 
 const slice = createSlice({
-  name: "favorites",
+  name: 'favorites',
   initialState: initial,
   reducers: {
     add(s, a: PayloadAction<number>) {
@@ -55,6 +55,5 @@ const slice = createSlice({
 
 export const { add, remove, toggle, clear } = slice.actions;
 export const selectFavoriteIds = (s: RootState) => s.favorites.ids;
-export const selectIsFavorite =
-  (id: number) => (s: RootState) => s.favorites.ids.includes(id);
+export const selectIsFavorite = (id: number) => (s: RootState) => s.favorites.ids.includes(id);
 export default slice.reducer;

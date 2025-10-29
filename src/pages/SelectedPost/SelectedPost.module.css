@@ -1,105 +1,148 @@
-.page{
-  width:100%;
-  max-width:760px;
-  margin-inline:auto;
-  padding:24px 16px;
+.page {
+  width: 100%;
+  max-width: 760px;
+  margin-inline: auto;
+  padding: 24px 16px;
 
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
   min-height: calc(100dvh - 56px - 48px); /* подстрой под свою высоту шапки/футера */
 }
 
-.breadcrumbs{
-  margin:0 0 16px;
-  font-size:12px;
-  color:#6B7280;          /* muted */
-  text-align:left;
+.breadcrumbs {
+  margin: 0 0 16px;
+  font-size: 12px;
+  color: #6b7280; /* muted */
+  text-align: left;
 }
-.breadcrumbLink{ color:#6B7280; text-decoration:none; }
-.breadcrumbLink:hover{ text-decoration:underline; }
-
-.title{
-  margin:0 auto 24px;
-  max-width:760px;
-  text-align:center;
-  font-size:40px;
-  line-height:1.2;
-  font-weight:700;
-  color:#111827;          /* заголовок потемнее */
+.breadcrumbLink {
+  color: #6b7280;
+  text-decoration: none;
+}
+.breadcrumbLink:hover {
+  text-decoration: underline;
 }
 
-.image{
-  display:block;
-  max-width:100%;
-  height:auto;
-  margin:0 auto 24px;
+.title {
+  margin: 0 auto 24px;
+  max-width: 760px;
+  text-align: center;
+  font-size: 40px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #111827; /* заголовок потемнее */
 }
 
-.content{
-  max-width:760px;
-  margin:0 auto 24px;
-  line-height:1.7;
-  color:#374151;          /* текст */
-  text-align:left;
+.image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 24px;
 }
-.content p{ margin:0 0 16px; }
-.content p:last-child{ margin-bottom:0; }
+
+.content {
+  max-width: 760px;
+  margin: 0 auto 24px;
+  line-height: 1.7;
+  color: #374151; /* текст */
+  text-align: left;
+}
+.content p {
+  margin: 0 0 16px;
+}
+.content p:last-child {
+  margin-bottom: 0;
+}
 
 /* === панель действий === */
-.actions{
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  padding:12px 0;
-  margin:24px 0;
+.actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  margin: 24px 0;
   /* border-top:1px solid #E5E7EB; */
   /* border-bottom:1px solid #E5E7EB; */
 }
 
-.left{ display:flex; align-items:center; gap:12px; }
+.left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
 /* квадратные кнопки с серым фоном+бордером, как в Фигме */
-.iconBtn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:36px;
-  height:36px;
-  border:1px solid #E5E7EB;
-  background:#F3F4F6;            /* светло-серый фон */
-  color:#6B7280;
-  border-radius:8px;
-  cursor:pointer;
+.iconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #e5e7eb;
+  background: #f3f4f6; /* светло-серый фон */
+  color: #6b7280;
+  border-radius: 8px;
+  cursor: pointer;
 }
-.iconBtn:hover{ background:#E9ECEF; color:#111827; }
-.icon{ width:20px; height:20px; display:inline-block; }
+.iconBtn:hover {
+  background: #e9ecef;
+  color: #111827;
+}
+.icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
 
 /* кнопка Add to favorites — тоже фон+бордер */
-.addBtn{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  border:1px solid #E5E7EB;
-  background:#F3F4F6;
-  color:#111827;
-  padding:8px 12px;
-  border-radius:8px;
-  cursor:pointer;
+.addBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f3f4f6;
+  color: #111827;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 /* === нижняя навигация === */
-.postNav{
-  margin-top:auto;                 /* прибиваем к низу колонки */
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+.postNav {
+  margin-top: auto; /* прибиваем к низу колонки */
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-  border-top:1px solid #E5E7EB;    /* сепараторы */
-  border-bottom:1px solid #E5E7EB;
-  padding:12px 0;
+  border-top: 1px solid #e5e7eb; /* сепараторы */
+  border-bottom: 1px solid #e5e7eb;
+  padding: 12px 0;
 }
-.navLink{ color:#6B7280; text-decoration:none; }
-.navLink:hover{ text-decoration:underline; }
+.navLink {
+  color: #6b7280;
+  text-decoration: none;
+}
+.navLink:hover {
+  text-decoration: underline;
+}
+
+/* Мета-информация */
+.meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.lesson {
+  background: #f3f4f6;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}

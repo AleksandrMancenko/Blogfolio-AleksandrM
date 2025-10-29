@@ -1,1 +1,1 @@
-export { default } from "./SelectedPost";
+export { default } from './SelectedPost';
