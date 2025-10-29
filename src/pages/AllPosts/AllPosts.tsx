@@ -1,20 +1,20 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import Tabs, { type TabItem } from "../../components/common/Tabs";
-import PostCardBase from "../../components/common/PostCard/PostCardBase";
-import type { Post } from "../../components/common/PostCard/PostCard.types";
-import styles from "./AllPosts.module.css";
-import { useEffect, useMemo, useState } from "react";
-import { get, getAbs } from "../../api/student";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { selectFavoriteIds, toggle as toggleFav } from "../../features/favorites/favoritesSlice";
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Tabs, { type TabItem } from '../../components/common/Tabs';
+import PostCardBase from '../../components/common/PostCard/PostCardBase';
+import type { Post } from '../../components/common/PostCard/PostCard.types';
+import styles from './AllPosts.module.css';
+import { useEffect, useMemo, useState } from 'react';
+import { get, getAbs } from '../../api/student';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { selectFavoriteIds, toggle as toggleFav } from '../../features/favorites/favoritesSlice';
 import {
   selectPosts,
   selectPostsLoaded,
   selectPostsError,
   setAll as setAllPosts,
   setError as setPostsError,
-} from "../../features/posts/postsSlice";
-import { seedPosts } from "../../features/posts/seed";
+} from '../../features/posts/postsSlice';
+import { seedPosts } from '../../features/posts/seed';
 
 type PostDto = {
   id: number;
@@ -41,7 +41,7 @@ function dtoToPost(dto: PostDto): Post {
   };
 }
 
-const USE_MOCK = process.env.REACT_APP_USE_MOCK === "1";
+const USE_MOCK = process.env.REACT_APP_USE_MOCK === '1';
 
 export default function AllPosts() {
   const { pathname } = useLocation();
@@ -52,28 +52,30 @@ export default function AllPosts() {
   const favIds = useAppSelector(selectFavoriteIds);
   const favCount = favIds.length;
 
-  const posts         = useAppSelector(selectPosts);
-  const postsLoaded   = useAppSelector(selectPostsLoaded);
-  const postsErr      = useAppSelector(selectPostsError);
+  const posts = useAppSelector(selectPosts);
+  const postsLoaded = useAppSelector(selectPostsLoaded);
+  const postsErr = useAppSelector(selectPostsError);
 
   const items: TabItem[] = useMemo(
     () => [
-      { value: "all", label: "All" },
-      { value: "fav", label: favCount ? `My favorites (${favCount})` : "My favorites" },
-      { value: "pop", label: "Popular" },
+      { value: 'all', label: 'All' },
+      { value: 'fav', label: favCount ? `My favorites (${favCount})` : 'My favorites' },
+      { value: 'pop', label: 'Popular' },
     ],
-    [favCount]
+    [favCount],
   );
 
-  const [tab, setTab] = useState<string>(isFavPage ? "fav" : "all");
+  const [tab, setTab] = useState<string>(isFavPage ? 'fav' : 'all');
 
   useEffect(() => {
-    if (isFavPage) setTab("fav");
-    else if (tab === "fav") setTab("all");
+    if (isFavPage) setTab('fav');
+    else if (tab === 'fav') setTab('all');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFavPage]);
 
-  const query = useAppSelector((s) => s.search.query).trim().toLowerCase();
+  const query = useAppSelector((s) => s.search.query)
+    .trim()
+    .toLowerCase();
 
   // Загрузка постов в Redux: mock или API
   useEffect(() => {
@@ -83,7 +85,10 @@ export default function AllPosts() {
 
     async function loadApi() {
       try {
-        const first = await get<Paginated<PostDto>>("/blog/posts/", { limit: TAKE, ordering: "-date" });
+        const first = await get<Paginated<PostDto>>('/blog/posts/', {
+          limit: TAKE,
+          ordering: '-date',
+        });
         const acc: PostDto[] = [...first.results];
         let nextUrl = first.next;
         while (acc.length < TAKE && nextUrl) {
@@ -106,12 +111,12 @@ export default function AllPosts() {
   }, [dispatch, postsLoaded]);
 
   const onTabChange = (v: string) => {
-    if (v === "fav") {
-      if (!isFavPage) navigate("/favorites");
-      setTab("fav");
+    if (v === 'fav') {
+      if (!isFavPage) navigate('/favorites');
+      setTab('fav');
       return;
     }
-    if (isFavPage) navigate("/");
+    if (isFavPage) navigate('/');
     setTab(v);
   };
 
@@ -122,11 +127,11 @@ export default function AllPosts() {
   }, [posts, query]);
 
   const filtered = useMemo(() => {
-    if (tab === "fav") return filteredByQuery.filter((p) => favIds.includes(p.id));
+    if (tab === 'fav') return filteredByQuery.filter((p) => favIds.includes(p.id));
     return filteredByQuery;
   }, [filteredByQuery, favIds, tab]);
 
-  const isFavView = isFavPage || tab === "fav";
+  const isFavView = isFavPage || tab === 'fav';
 
   const isFav = (id: number) => favIds.includes(id);
   const onToggle = (id: number) => dispatch(toggleFav(id));
@@ -136,21 +141,31 @@ export default function AllPosts() {
     return [arr[0] ?? null, arr.slice(1, 5), arr.slice(5, 13)];
   }, [filtered]);
 
-  if (postsErr) return <div className={styles.page}><p>Failed to load: {postsErr}</p></div>;
-  if (!postsLoaded) return <div className={styles.page}><p>Loading…</p></div>;
+  if (postsErr)
+    return (
+      <div className={styles.page}>
+        <p>Failed to load: {postsErr}</p>
+      </div>
+    );
+  if (!postsLoaded)
+    return (
+      <div className={styles.page}>
+        <p>Loading…</p>
+      </div>
+    );
 
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <h1 className={styles.pageTitle}>{isFavView ? "Favorites" : "Blog"}</h1>
+        <h1 className={styles.pageTitle}>{isFavView ? 'Favorites' : 'Blog'}</h1>
         <div className={styles.tabsWrap}>
           <Tabs items={items} value={tab} onChange={onTabChange} />
         </div>
       </header>
 
       {filtered.length === 0 ? (
-        <div style={{ padding: "24px 0" }}>
-          <p>{isFavView ? "No favorites yet." : `No results${query ? ` for “${query}”` : ""}.`}</p>
+        <div style={{ padding: '24px 0' }}>
+          <p>{isFavView ? 'No favorites yet.' : `No results${query ? ` for “${query}”` : ''}.`}</p>
         </div>
       ) : isFavView ? (
         <section className={styles.colLeft}>
@@ -219,7 +234,11 @@ export default function AllPosts() {
       <nav className={styles.pagination} aria-label="Pagination">
         <span className={styles.prev}>← Prev</span>
         <div className={styles.pages}>
-          <a href="#" aria-current="page">1</a><a href="#">2</a><a href="#">3</a>
+          <a href="#" aria-current="page">
+            1
+          </a>
+          <a href="#">2</a>
+          <a href="#">3</a>
         </div>
         <span className={styles.next}>Next →</span>
       </nav>

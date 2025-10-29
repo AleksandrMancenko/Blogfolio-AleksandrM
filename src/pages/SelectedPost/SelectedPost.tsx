@@ -1,10 +1,10 @@
-import { useParams, Link } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
-import { get } from "../../api/student";
-import styles from "./SelectedPost.module.css";
-import { useAppSelector } from "../../store/hooks";
-import { selectPosts } from "../../features/posts/postsSlice";
-import type { Post as CardPost } from "../../components/common/PostCard/PostCard.types";
+import { useParams, Link } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { get } from '../../api/student';
+import styles from './SelectedPost.module.css';
+import { useAppSelector } from '../../store/hooks';
+import { selectPosts } from '../../features/posts/postsSlice';
+import type { Post as CardPost } from '../../components/common/PostCard/PostCard.types';
 
 type PostDto = {
   id: number;
@@ -14,7 +14,7 @@ type PostDto = {
   lesson_num: number;
   title: string;
   description: string;
-  author: number; 
+  author: number;
 };
 
 function dtoToPost(dto: PostDto): CardPost {
@@ -25,11 +25,11 @@ function dtoToPost(dto: PostDto): CardPost {
     date: dto.date,
     image: dto.image || undefined,
     lesson_num: dto.lesson_num,
-    author: dto.author, 
+    author: dto.author,
   };
 }
 
-const USE_MOCK = process.env.REACT_APP_USE_MOCK === "1";
+const USE_MOCK = process.env.REACT_APP_USE_MOCK === '1';
 
 export default function SelectedPost() {
   const params = useParams<{ id: string }>();
@@ -46,7 +46,7 @@ export default function SelectedPost() {
 
     async function load() {
       if (!Number.isFinite(id)) {
-        setErr("Invalid id");
+        setErr('Invalid id');
         setLoading(false);
         return;
       }
@@ -87,7 +87,7 @@ export default function SelectedPost() {
 
   if (!Number.isFinite(id)) return <div style={{ padding: 24 }}>Invalid post id</div>;
   if (loading) return <div style={{ padding: 24 }}>Loading…</div>;
-  if (err || !post) return <div style={{ padding: 24 }}>Failed to load: {err ?? "Not found"}</div>;
+  if (err || !post) return <div style={{ padding: 24 }}>Failed to load: {err ?? 'Not found'}</div>;
 
   return (
     <div className={styles.page}>

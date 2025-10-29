@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { Post } from "../../components/common/PostCard/PostCard.types";
-import type { RootState } from "../../store";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { Post } from '../../components/common/PostCard/PostCard.types';
+import type { RootState } from '../../store';
 
 type PostsState = {
   items: Post[];
@@ -11,7 +11,7 @@ type PostsState = {
 const initialState: PostsState = { items: [], loaded: false, error: null };
 
 const slice = createSlice({
-  name: "posts",
+  name: 'posts',
   initialState,
   reducers: {
     setAll(state, action: PayloadAction<Post[]>) {

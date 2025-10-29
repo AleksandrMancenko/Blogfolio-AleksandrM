@@ -1,9 +1,9 @@
 // Серверный DTO
 export type PostDto = {
   id: number;
-  image: string | null;        // на всякий случай допускаем null
+  image: string | null; // на всякий случай допускаем null
   text: string;
-  date: string;                // ISO date
+  date: string; // ISO date
   lesson_num: number;
   title: string;
   description: string;
@@ -15,7 +15,7 @@ export type Post = {
   id: number;
   image: string | null;
   title: string;
-  text: string;                // по месту используешь как надо
+  text: string; // по месту используешь как надо
   date: string;
   description: string;
   lesson: number;

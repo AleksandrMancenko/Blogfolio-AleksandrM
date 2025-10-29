@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-export type Theme = "light" | "dark";
+export type Theme = 'light' | 'dark';
 
 type UiState = {
   menuOpen: boolean;
@@ -9,16 +9,22 @@ type UiState = {
 
 const initialState: UiState = {
   menuOpen: false,
-  theme: "light",
+  theme: 'light',
 };
 
 const uiSlice = createSlice({
-  name: "ui",
+  name: 'ui',
   initialState,
   reducers: {
-    openMenu(state) { state.menuOpen = true; },
-    closeMenu(state) { state.menuOpen = false; },
-    toggleTheme(state) { state.theme = state.theme === "light" ? "dark" : "light"; },
+    openMenu(state) {
+      state.menuOpen = true;
+    },
+    closeMenu(state) {
+      state.menuOpen = false;
+    },
+    toggleTheme(state) {
+      state.theme = state.theme === 'light' ? 'dark' : 'light';
+    },
   },
 });
 
@@ -27,4 +33,4 @@ export default uiSlice.reducer;
 
 // селекторы
 export const selectMenuOpen = (s: { ui: UiState }) => s.ui.menuOpen;
-export const selectTheme    = (s: { ui: UiState }) => s.ui.theme;
+export const selectTheme = (s: { ui: UiState }) => s.ui.theme;
