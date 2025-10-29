@@ -63,61 +63,57 @@ export default function SignUp() {
           <h1 className={styles.title}>Sign Up</h1>
 
           <form className={styles.form} onSubmit={onSubmit} noValidate>
-            {error && (
-              <div className={styles.errorMessage}>
-                {error}
-              </div>
-            )}
-          <Input
-            id="su-name"
-            label="Name"
-            value={name}
-            onChange={setName}
-            placeholder="Your name"
-            required
-          />
-          <Input
-            id="su-email"
-            label="Email"
-            type="email"
-            value={email}
-            onChange={setEmail}
-            placeholder="Your email"
-            required
-            errorText={emailErr}
-          />
-          <Input
-            id="su-pass"
-            label="Password"
-            type="password"
-            value={pass}
-            onChange={setPass}
-            placeholder="Your password"
-            required
-          />
-          <Input
-            id="su-pass2"
-            label="Confirm password"
-            type="password"
-            value={pass2}
-            onChange={setPass2}
-            placeholder="Confirm password"
-            required
-            errorText={passErr}
-          />
+            {error && <div className={styles.errorMessage}>{error}</div>}
+            <Input
+              id="su-name"
+              label="Name"
+              value={name}
+              onChange={setName}
+              placeholder="Your name"
+              required
+            />
+            <Input
+              id="su-email"
+              label="Email"
+              type="email"
+              value={email}
+              onChange={setEmail}
+              placeholder="Your email"
+              required
+              errorText={emailErr}
+            />
+            <Input
+              id="su-pass"
+              label="Password"
+              type="password"
+              value={pass}
+              onChange={setPass}
+              placeholder="Your password"
+              required
+            />
+            <Input
+              id="su-pass2"
+              label="Confirm password"
+              type="password"
+              value={pass2}
+              onChange={setPass2}
+              placeholder="Confirm password"
+              required
+              errorText={passErr}
+            />
 
-          <div className={styles.submit}>
-            <Button type="submit" variant="primary" disabled={!canSubmit || isLoading}>
-              {isLoading ? 'Signing Up...' : 'Sign Up'}
-            </Button>
-          </div>
+            <div className={styles.submit}>
+              <Button type="submit" variant="primary" disabled={!canSubmit || isLoading}>
+                {isLoading ? 'Signing Up...' : 'Sign Up'}
+              </Button>
+            </div>
 
-          <div className={styles.note}>
-            Already have an account? <Link to="/signin">Sign In</Link>
-          </div>
-        </form>
-      </div>
-    </section>
+            <div className={styles.note}>
+              Already have an account? <Link to="/signin">Sign In</Link>
+            </div>
+          </form>
+        </div>
+      </section>
     </LoadingOverlay>
   );
 }

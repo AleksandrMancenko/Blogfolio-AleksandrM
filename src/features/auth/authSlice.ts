@@ -1,5 +1,13 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { signIn, signOut, verifyToken, refreshToken, registerUser, activateUser } from '../../api/authService';
+import {
+  signIn,
+  signOut,
+  verifyToken,
+  refreshToken,
+  registerUser,
+  activateUser,
+  getUserProfile,
+} from '../../api/authService';
 import { addNotification } from '../notifications/notificationSlice';
 
 export type User = {
@@ -34,23 +42,34 @@ export const loginUser = createAsyncThunk(
   async (credentials: { email: string; password: string }, { dispatch, rejectWithValue }) => {
     try {
       const response = await signIn(credentials);
-      dispatch(addNotification({
-        type: 'success',
-        title: 'Welcome back!',
-        message: 'You have successfully signed in',
-        duration: 3000,
-      }));
+      dispatch(
+        addNotification({
+          type: 'success',
+          title: 'Welcome back!',
+          message: 'You have successfully signed in',
+          duration: 3000,
+        }),
+      );
+      // Загружаем профиль пользователя после успешного входа
+      try {
+        await dispatch(fetchUserProfile()).unwrap();
+      } catch {
+        // Если загрузка профиля не удалась, не прерываем процесс входа
+        console.warn('Failed to fetch user profile after login');
+      }
       return response;
     } catch (error: any) {
-      dispatch(addNotification({
-        type: 'error',
-        title: 'Sign In Failed',
-        message: error.message || 'Invalid email or password',
-        duration: 5000,
-      }));
+      dispatch(
+        addNotification({
+          type: 'error',
+          title: 'Sign In Failed',
+          message: error.message || 'Invalid email or password',
+          duration: 5000,
+        }),
+      );
       return rejectWithValue(error.message || 'Login failed');
     }
-  }
+  },
 );
 
 // Async thunk для проверки токена
@@ -67,7 +86,7 @@ export const verifyUserToken = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue(error.message || 'Token verification failed');
     }
-  }
+  },
 );
 
 // Async thunk для обновления токена
@@ -80,32 +99,38 @@ export const refreshUserToken = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue(error.message || 'Token refresh failed');
     }
-  }
+  },
 );
 
 // Async thunk для регистрации пользователя
 export const registerNewUser = createAsyncThunk(
   'auth/register',
-  async (data: { email: string; username: string; password: string }, { dispatch, rejectWithValue }) => {
+  async (
+    data: { email: string; username: string; password: string },
+    { dispatch, rejectWithValue },
+  ) => {
     try {
       const response = await registerUser(data);
-      dispatch(addNotification({
-        type: 'success',
-        title: 'Registration Successful',
-        message: 'Please check your email to confirm your account.',
-        duration: 5000,
-      }));
+      dispatch(
+        addNotification({
+          type: 'success',
+          title: 'Registration Successful',
+          message: 'Please check your email to confirm your account.',
+          duration: 5000,
+        }),
+      );
       return response;
     } catch (error: any) {
       let errorMessage = 'Registration failed';
       try {
         // Пытаемся распарсить JSON ошибки
-        const errorData = typeof error.message === 'string' && error.message.startsWith('{') 
-          ? JSON.parse(error.message) 
-          : (typeof error.message === 'string' && error.message.includes('{') 
-            ? JSON.parse(error.message) 
-            : error.message);
-            
+        const errorData =
+          typeof error.message === 'string' && error.message.startsWith('{')
+            ? JSON.parse(error.message)
+            : typeof error.message === 'string' && error.message.includes('{')
+              ? JSON.parse(error.message)
+              : error.message;
+
         if (typeof errorData === 'object' && errorData !== null) {
           // Форматируем ошибки валидации
           const errors = Object.entries(errorData).map(([field, messages]: [string, any]) => {
@@ -121,16 +146,18 @@ export const registerNewUser = createAsyncThunk(
       } catch {
         errorMessage = error.message || 'Registration failed';
       }
-      
-      dispatch(addNotification({
-        type: 'error',
-        title: 'Registration Failed',
-        message: errorMessage,
-        duration: 5000,
-      }));
+
+      dispatch(
+        addNotification({
+          type: 'error',
+          title: 'Registration Failed',
+          message: errorMessage,
+          duration: 5000,
+        }),
+      );
       return rejectWithValue(errorMessage);
     }
-  }
+  },
 );
 
 // Async thunk для активации пользователя
@@ -139,23 +166,40 @@ export const activateAccount = createAsyncThunk(
   async (data: { uid: string; token: string }, { dispatch, rejectWithValue }) => {
     try {
       const response = await activateUser(data.uid, data.token);
-      dispatch(addNotification({
-        type: 'success',
-        title: 'Account Activated',
-        message: 'Your account has been successfully activated!',
-        duration: 5000,
-      }));
+      dispatch(
+        addNotification({
+          type: 'success',
+          title: 'Account Activated',
+          message: 'Your account has been successfully activated!',
+          duration: 5000,
+        }),
+      );
       return response;
     } catch (error: any) {
-      dispatch(addNotification({
-        type: 'error',
-        title: 'Activation Failed',
-        message: error.message || 'Invalid activation link',
-        duration: 5000,
-      }));
+      dispatch(
+        addNotification({
+          type: 'error',
+          title: 'Activation Failed',
+          message: error.message || 'Invalid activation link',
+          duration: 5000,
+        }),
+      );
       return rejectWithValue(error.message || 'Activation failed');
     }
-  }
+  },
+);
+
+// Async thunk для получения профиля пользователя
+export const fetchUserProfile = createAsyncThunk(
+  'auth/fetchProfile',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await getUserProfile();
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'Failed to fetch profile');
+    }
+  },
 );
 
 const authSlice = createSlice({
@@ -169,7 +213,7 @@ const authSlice = createSlice({
       state.accessToken = null;
       state.refreshToken = null;
       state.error = null;
-      
+
       // Показываем уведомление о выходе, если не указано иное
       if (action.payload?.showNotification !== false) {
         // Уведомление будет показано в компоненте, который вызывает logout
@@ -256,6 +300,21 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(activateAccount.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      // Fetch profile cases
+      .addCase(fetchUserProfile.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchUserProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+        state.isAuthenticated = true;
+        state.error = null;
+      })
+      .addCase(fetchUserProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       });

@@ -13,7 +13,9 @@ export default function App() {
   // Редирект с studapi.teachmeskills.by/activate на localhost:3000/activate
   useEffect(() => {
     if (window.location.href.includes('studapi.teachmeskills.by/activate/')) {
-      const url = window.location.href.replace('https://studapi.teachmeskills.by', '').replace('//', '/');
+      const url = window.location.href
+        .replace('https://studapi.teachmeskills.by', '')
+        .replace('//', '/');
       window.location.href = `http://localhost:3000${url}`;
     }
   }, []);
@@ -28,7 +30,14 @@ export default function App() {
           <Route path="/favorites" element={<AllPosts />} />
           <Route path="/search" element={<Search />} />
           <Route path="/posts/:id" element={<SelectedPost />} />
-          <Route path="/create" element={<ProtectedRoute><CreatePost /></ProtectedRoute>} />
+          <Route
+            path="/create"
+            element={
+              <ProtectedRoute>
+                <CreatePost />
+              </ProtectedRoute>
+            }
+          />
 
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />

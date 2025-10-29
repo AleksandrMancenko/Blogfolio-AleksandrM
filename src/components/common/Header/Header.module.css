@@ -80,8 +80,7 @@
   font-size: 14px;
 }
 
-/* тёмная тема: поле остаётся читабельным на синем фоне */
-:root[data-theme='dark'] .searchInput,
+/* тёмная тема: кнопка поиска остаётся светлой для контраста */
 :root[data-theme='dark'] .searchBtn {
   background: #fff;
   color: #111827;

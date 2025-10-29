@@ -11,7 +11,18 @@ import auth from '../features/auth/authSlice';
 import notifications from '../features/notifications/notificationSlice';
 
 export const store = configureStore({
-  reducer: { ui, search, searchHistory, searchResults, preview, posts, favorites, likes, auth, notifications },
+  reducer: {
+    ui,
+    search,
+    searchHistory,
+    searchResults,
+    preview,
+    posts,
+    favorites,
+    likes,
+    auth,
+    notifications,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

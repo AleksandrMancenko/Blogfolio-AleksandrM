@@ -2,6 +2,7 @@ import styles from './PostCard.module.css';
 import type { Post } from '../../../api/posts.types';
 import { LikeIcon, DislikeIcon, BookmarkIcon, BookmarkFilledIcon } from './icons';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { selectIsAuthenticated } from '../../../features/auth/authSlice';
 import { openSingle } from '../../../features/preview/previewSlice';
 import { initializePost, toggleLike, toggleDislike } from '../../../features/likes/likesSlice';
 import MoreMenu from './MoreMenu';
@@ -36,18 +37,21 @@ export default function PostCardBase({
 }: Props) {
   const dispatch = useAppDispatch();
   const isCompact = variant === 'compact';
-  
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+
   // Получаем состояние лайков для этого поста
   const likesState = useAppSelector((state) => state.likes[post.id]);
-  
+
   // Инициализируем пост в Redux при первом рендере
   useEffect(() => {
     if (!likesState) {
-      dispatch(initializePost({
-        postId: post.id,
-        likes: post.likes,
-        dislikes: post.dislikes,
-      }));
+      dispatch(
+        initializePost({
+          postId: post.id,
+          likes: post.likes,
+          dislikes: post.dislikes,
+        }),
+      );
     }
   }, [dispatch, post.id, post.likes, post.dislikes, likesState]);
 
@@ -127,19 +131,19 @@ export default function PostCardBase({
 
       <div className={styles.actions} aria-label="Post actions">
         <div className={styles.actionsLeft}>
-          <button 
-            className={`${styles.iconBtn} ${likesState?.userLiked ? styles.iconBtnActive : ''}`} 
-            type="button" 
-            aria-label="Like" 
+          <button
+            className={`${styles.iconBtn} ${likesState?.userLiked ? styles.iconBtnActive : ''}`}
+            type="button"
+            aria-label="Like"
             onClick={handleLike}
           >
             <LikeIcon className={styles.icon} />
             <span className={styles.counter}>{likesState?.likes ?? post.likes}</span>
           </button>
-          <button 
-            className={`${styles.iconBtn} ${likesState?.userDisliked ? styles.iconBtnActive : ''}`} 
-            type="button" 
-            aria-label="Dislike" 
+          <button
+            className={`${styles.iconBtn} ${likesState?.userDisliked ? styles.iconBtnActive : ''}`}
+            type="button"
+            aria-label="Dislike"
             onClick={handleDislike}
           >
             <DislikeIcon className={styles.icon} />
@@ -147,19 +151,21 @@ export default function PostCardBase({
           </button>
         </div>
         <div className={styles.actionsRight}>
-          <button
-            className={`${styles.iconBtn} ${isBookmarked ? styles.iconBtnActive : ''}`}
-            type="button"
-            aria-label={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
-            aria-pressed={isBookmarked ? true : false}
-            onClick={handleBookmark}
-          >
-            {isBookmarked ? (
-              <BookmarkFilledIcon className={styles.icon} />
-            ) : (
-              <BookmarkIcon className={styles.icon} />
-            )}
-          </button>
+          {isAuthenticated && (
+            <button
+              className={`${styles.iconBtn} ${isBookmarked ? styles.iconBtnActive : ''}`}
+              type="button"
+              aria-label={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
+              aria-pressed={isBookmarked ? true : false}
+              onClick={handleBookmark}
+            >
+              {isBookmarked ? (
+                <BookmarkFilledIcon className={styles.icon} />
+              ) : (
+                <BookmarkIcon className={styles.icon} />
+              )}
+            </button>
+          )}
           <MoreMenu onEdit={onEdit || (() => {})} onDelete={onDelete || (() => {})} />
         </div>
       </div>

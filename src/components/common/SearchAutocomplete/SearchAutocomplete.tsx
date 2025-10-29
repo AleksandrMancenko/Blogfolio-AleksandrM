@@ -24,8 +24,8 @@ export default function SearchAutocomplete({
   const searchHistory = useAppSelector(selectSearchHistory);
 
   // Фильтруем историю по введенному тексту
-  const filteredSuggestions = searchHistory.filter(item =>
-    item.toLowerCase().includes(value.toLowerCase()) && item !== value
+  const filteredSuggestions = searchHistory.filter(
+    (item) => item.toLowerCase().includes(value.toLowerCase()) && item !== value,
   );
 
   // Показываем dropdown только если есть предложения и поле не пустое
@@ -93,7 +93,7 @@ export default function SearchAutocomplete({
         aria-haspopup="listbox"
         role="combobox"
       />
-      
+
       {shouldShowDropdown && (
         <div ref={dropdownRef} className={styles.dropdown} role="listbox">
           {filteredSuggestions.map((suggestion) => (
@@ -111,4 +111,3 @@ export default function SearchAutocomplete({
     </div>
   );
 }
-

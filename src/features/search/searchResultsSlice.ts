@@ -43,10 +43,14 @@ const searchResultsSlice = createSlice({
   },
 });
 
-export const { setQuery, setLoading, setResults, setError, clearResults } = searchResultsSlice.actions;
-export const selectSearchResults = (state: { searchResults: SearchResultsState }) => state.searchResults.results;
-export const selectSearchLoading = (state: { searchResults: SearchResultsState }) => state.searchResults.loading;
-export const selectSearchError = (state: { searchResults: SearchResultsState }) => state.searchResults.error;
-export const selectSearchQuery = (state: { searchResults: SearchResultsState }) => state.searchResults.query;
+export const { setQuery, setLoading, setResults, setError, clearResults } =
+  searchResultsSlice.actions;
+export const selectSearchResults = (state: { searchResults: SearchResultsState }) =>
+  state.searchResults.results;
+export const selectSearchLoading = (state: { searchResults: SearchResultsState }) =>
+  state.searchResults.loading;
+export const selectSearchError = (state: { searchResults: SearchResultsState }) =>
+  state.searchResults.error;
+export const selectSearchQuery = (state: { searchResults: SearchResultsState }) =>
+  state.searchResults.query;
 export default searchResultsSlice.reducer;
-

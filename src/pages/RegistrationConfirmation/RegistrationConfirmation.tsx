@@ -8,11 +8,12 @@ export default function RegistrationConfirmation() {
         <Link to="/" className={styles.back}>
           Back to home
         </Link>
-        
+
         <div className={styles.content}>
           <h1 className={styles.title}>Registration Confirmation</h1>
           <p className={styles.message}>
-            We sent a confirmation email to your email address. Please check your inbox and follow the link to confirm your registration.
+            We sent a confirmation email to your email address. Please check your inbox and follow
+            the link to confirm your registration.
           </p>
           <p className={styles.note}>
             Didn't receive the email? Check your spam folder or try again.
@@ -28,4 +29,3 @@ export default function RegistrationConfirmation() {
     </section>
   );
 }
-

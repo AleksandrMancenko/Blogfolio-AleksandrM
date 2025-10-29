@@ -3,7 +3,7 @@ import type { Post } from '../../components/common/PostCard/PostCard.types';
 export const seedPosts: Post[] = [
   {
     id: 101,
-    title: 'Waymo launches world\'s first fully autonomous ride-hailing',
+    title: "Waymo launches world's first fully autonomous ride-hailing",
     text: 'Driverless taxi service operates 24/7 with perfect safety record across major cities.',
     date: '2025-10-20',
     image: 'https://picsum.photos/640/360?random=101',

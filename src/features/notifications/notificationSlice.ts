@@ -30,7 +30,7 @@ const notificationSlice = createSlice({
       });
     },
     removeNotification: (state, action: PayloadAction<string>) => {
-      state.notifications = state.notifications.filter(n => n.id !== action.payload);
+      state.notifications = state.notifications.filter((n) => n.id !== action.payload);
     },
     clearAllNotifications: (state) => {
       state.notifications = [];
@@ -38,10 +38,11 @@ const notificationSlice = createSlice({
   },
 });
 
-export const { addNotification, removeNotification, clearAllNotifications } = notificationSlice.actions;
+export const { addNotification, removeNotification, clearAllNotifications } =
+  notificationSlice.actions;
 
 // Selectors
-export const selectNotifications = (state: { notifications: NotificationState }) => state.notifications.notifications;
+export const selectNotifications = (state: { notifications: NotificationState }) =>
+  state.notifications.notifications;
 
 export default notificationSlice.reducer;
-
