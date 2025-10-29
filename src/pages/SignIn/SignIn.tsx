@@ -5,7 +5,12 @@ import Button from '../../components/common/Button';
 import LoadingOverlay from '../../components/common/LoadingOverlay';
 import styles from './SignIn.module.css';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { loginUser, clearError, selectAuthLoading, selectAuthError } from '../../features/auth/authSlice';
+import {
+  loginUser,
+  clearError,
+  selectAuthLoading,
+  selectAuthError,
+} from '../../features/auth/authSlice';
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -31,7 +36,7 @@ export default function SignIn() {
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    
+
     // Валидация
     if (!email.trim()) {
       setEmailErr('Required');
@@ -40,7 +45,7 @@ export default function SignIn() {
     if (!pass.trim()) {
       return;
     }
-    
+
     setEmailErr(undefined);
 
     try {
@@ -63,11 +68,7 @@ export default function SignIn() {
           <h1 className={styles.title}>Sign In</h1>
 
           <form className={styles.form} onSubmit={onSubmit} noValidate>
-            {error && (
-              <div className={styles.errorMessage}>
-                {error}
-              </div>
-            )}
+            {error && <div className={styles.errorMessage}>{error}</div>}
 
             <Input
               id="signin-email"

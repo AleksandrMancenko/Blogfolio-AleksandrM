@@ -18,20 +18,20 @@ const searchHistorySlice = createSlice({
     addQuery(state, action: PayloadAction<string>) {
       const query = action.payload.trim();
       if (!query) return;
-      
+
       // Удаляем дубликаты
-      state.queries = state.queries.filter(q => q !== query);
-      
+      state.queries = state.queries.filter((q) => q !== query);
+
       // Добавляем в начало
       state.queries.unshift(query);
-      
+
       // Ограничиваем количество
       if (state.queries.length > state.maxHistory) {
         state.queries = state.queries.slice(0, state.maxHistory);
       }
     },
     removeQuery(state, action: PayloadAction<string>) {
-      state.queries = state.queries.filter(q => q !== action.payload);
+      state.queries = state.queries.filter((q) => q !== action.payload);
     },
     clearHistory(state) {
       state.queries = [];

@@ -2,12 +2,12 @@ import { useParams, Link } from 'react-router-dom';
 import { useEffect, useMemo } from 'react';
 import styles from './SelectedPost.module.css';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { 
-  fetchPostById, 
-  selectCurrentPost, 
-  selectCurrentPostLoading, 
+import {
+  fetchPostById,
+  selectCurrentPost,
+  selectCurrentPostLoading,
   selectCurrentPostError,
-  selectPosts 
+  selectPosts,
 } from '../../features/posts/postsSlice';
 import LoadingOverlay from '../../components/common/LoadingOverlay';
 import type { Post } from '../../api/posts.types';
@@ -31,8 +31,8 @@ export default function SelectedPost() {
     }
 
     // Сначала проверяем, есть ли пост в списке всех постов
-    const postFromList = allPosts.find(post => post.id === id);
-    
+    const postFromList = allPosts.find((post) => post.id === id);
+
     if (postFromList && USE_MOCK) {
       // В mock режиме используем данные из списка
       return;
@@ -51,7 +51,7 @@ export default function SelectedPost() {
   }
 
   // В mock режиме используем пост из списка
-  const post = USE_MOCK ? allPosts.find(p => p.id === id) : currentPost;
+  const post = USE_MOCK ? allPosts.find((p) => p.id === id) : currentPost;
 
   if (loading) {
     return (
@@ -66,9 +66,7 @@ export default function SelectedPost() {
   if (error || !post) {
     return (
       <div className={styles.page}>
-        <div style={{ padding: 24 }}>
-          Failed to load: {error ?? 'Post not found'}
-        </div>
+        <div style={{ padding: 24 }}>Failed to load: {error ?? 'Post not found'}</div>
       </div>
     );
   }

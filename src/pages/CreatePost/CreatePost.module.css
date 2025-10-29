@@ -109,3 +109,10 @@
   width: 100%;
 }
 
+/* Сообщения об ошибках валидации полей */
+.fieldError {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--error, #dc2626);
+  padding-left: 4px;
+}

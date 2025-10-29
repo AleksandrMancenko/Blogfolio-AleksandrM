@@ -8,7 +8,11 @@ interface LoadingOverlayProps {
   children: React.ReactNode;
 }
 
-export default function LoadingOverlay({ isLoading, message = 'Loading...', children }: LoadingOverlayProps) {
+export default function LoadingOverlay({
+  isLoading,
+  message = 'Loading...',
+  children,
+}: LoadingOverlayProps) {
   return (
     <div className={styles.container}>
       {children}

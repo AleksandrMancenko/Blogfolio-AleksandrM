@@ -5,6 +5,9 @@ import { get } from '../../api/student';
 import { createPost, updatePost, deletePost } from '../../api/postsService';
 import { addNotification } from '../notifications/notificationSlice';
 
+type SortField = 'date' | 'title' | 'text' | 'lesson_num';
+type SortOrder = 'asc' | 'desc';
+
 type PostsState = {
   items: Post[];
   loaded: boolean;
@@ -18,6 +21,9 @@ type PostsState = {
   totalPages: number;
   hasNextPage: boolean;
   hasPrevPage: boolean;
+  // Сортировка
+  sortField: SortField | null;
+  sortOrder: SortOrder;
 };
 
 const initialState: PostsState = {
@@ -32,14 +38,30 @@ const initialState: PostsState = {
   totalPages: 1,
   hasNextPage: false,
   hasPrevPage: false,
+  sortField: 'date',
+  sortOrder: 'desc',
 };
 
 // Async thunk для загрузки постов с фильтром по группе курса
 export const fetchPostsByCourseGroup = createAsyncThunk(
   'posts/fetchByCourseGroup',
-  async ({ courseGroupId = 18, page = 1 }: { courseGroupId?: number; page?: number } = {}) => {
-    console.log('Fetching posts with params:', { courseGroupId, page });
-    
+  async ({
+    courseGroupId = 18,
+    page = 1,
+    sortField = 'date',
+    sortOrder = 'desc',
+  }: {
+    courseGroupId?: number;
+    page?: number;
+    sortField?: SortField | null;
+    sortOrder?: SortOrder;
+  } = {}) => {
+    console.log('Fetching posts with params:', { courseGroupId, page, sortField, sortOrder });
+
+    // Формируем параметр ordering
+    const orderingField = sortField || 'date';
+    const ordering = sortOrder === 'desc' ? `-${orderingField}` : orderingField;
+
     try {
       const response = await get<{
         count: number;
@@ -59,7 +81,7 @@ export const fetchPostsByCourseGroup = createAsyncThunk(
         author__course_group: courseGroupId,
         limit: 12, // Оптимальный лимит для продакшена
         offset: (page - 1) * 12,
-        ordering: '-date',
+        ordering,
       });
 
       console.log('API Response:', response);
@@ -67,7 +89,7 @@ export const fetchPostsByCourseGroup = createAsyncThunk(
         count: response.count,
         next: response.next,
         previous: response.previous,
-        resultsLength: response.results.length
+        resultsLength: response.results.length,
       });
 
       // Преобразуем DTO в Post
@@ -99,6 +121,8 @@ export const fetchPostsByCourseGroup = createAsyncThunk(
           hasPrevPage,
           totalCount: response.count,
         },
+        sortField,
+        sortOrder,
       };
     } catch (error) {
       console.error('Error fetching posts:', error);
@@ -113,20 +137,24 @@ export const createNewPost = createAsyncThunk(
   async (postData: Parameters<typeof createPost>[0], { dispatch }) => {
     try {
       const newPost = await createPost(postData);
-      dispatch(addNotification({
-        type: 'success',
-        title: 'Success!',
-        message: 'Post created successfully',
-        duration: 3000,
-      }));
+      dispatch(
+        addNotification({
+          type: 'success',
+          title: 'Success!',
+          message: 'Post created successfully',
+          duration: 3000,
+        }),
+      );
       return newPost;
     } catch (error: any) {
-      dispatch(addNotification({
-        type: 'error',
-        title: 'Error',
-        message: error.message || 'Failed to create post',
-        duration: 5000,
-      }));
+      dispatch(
+        addNotification({
+          type: 'error',
+          title: 'Error',
+          message: error.message || 'Failed to create post',
+          duration: 5000,
+        }),
+      );
       throw error;
     }
   },
@@ -138,20 +166,24 @@ export const updateExistingPost = createAsyncThunk(
   async ({ id, data }: { id: number; data: Parameters<typeof updatePost>[1] }, { dispatch }) => {
     try {
       const updatedPost = await updatePost(id, data);
-      dispatch(addNotification({
-        type: 'success',
-        title: 'Success!',
-        message: 'Post updated successfully',
-        duration: 3000,
-      }));
+      dispatch(
+        addNotification({
+          type: 'success',
+          title: 'Success!',
+          message: 'Post updated successfully',
+          duration: 3000,
+        }),
+      );
       return updatedPost;
     } catch (error: any) {
-      dispatch(addNotification({
-        type: 'error',
-        title: 'Error',
-        message: error.message || 'Failed to update post',
-        duration: 5000,
-      }));
+      dispatch(
+        addNotification({
+          type: 'error',
+          title: 'Error',
+          message: error.message || 'Failed to update post',
+          duration: 5000,
+        }),
+      );
       throw error;
     }
   },
@@ -163,54 +195,55 @@ export const deleteExistingPost = createAsyncThunk(
   async (id: number, { dispatch }) => {
     try {
       await deletePost(id);
-      dispatch(addNotification({
-        type: 'success',
-        title: 'Success!',
-        message: 'Post deleted successfully',
-        duration: 3000,
-      }));
+      dispatch(
+        addNotification({
+          type: 'success',
+          title: 'Success!',
+          message: 'Post deleted successfully',
+          duration: 3000,
+        }),
+      );
       return id;
     } catch (error: any) {
-      dispatch(addNotification({
-        type: 'error',
-        title: 'Error',
-        message: error.message || 'Failed to delete post',
-        duration: 5000,
-      }));
+      dispatch(
+        addNotification({
+          type: 'error',
+          title: 'Error',
+          message: error.message || 'Failed to delete post',
+          duration: 5000,
+        }),
+      );
       throw error;
     }
   },
 );
 
 // Async thunk для загрузки отдельного поста (публичный запрос)
-export const fetchPostById = createAsyncThunk(
-  'posts/fetchById',
-  async (id: number) => {
-    const dto = await get<{
-      id: number;
-      image: string | null;
-      text: string;
-      date: string;
-      lesson_num: number;
-      title: string;
-      description: string;
-      author: number;
-    }>(`/blog/posts/${id}/`);
+export const fetchPostById = createAsyncThunk('posts/fetchById', async (id: number) => {
+  const dto = await get<{
+    id: number;
+    image: string | null;
+    text: string;
+    date: string;
+    lesson_num: number;
+    title: string;
+    description: string;
+    author: number;
+  }>(`/blog/posts/${id}/`);
 
-    // Преобразуем DTO в Post
-    return {
-      id: dto.id,
-      title: dto.title,
-      text: dto.description || dto.text,
-      date: dto.date,
-      image: dto.image || undefined,
-      lesson_num: dto.lesson_num,
-      author: dto.author,
-      likes: Math.floor(Math.random() * 200) + 10, // Генерируем случайные лайки для демо
-      dislikes: Math.floor(Math.random() * 20) + 1, // Генерируем случайные дизлайки для демо
-    };
-  },
-);
+  // Преобразуем DTO в Post
+  return {
+    id: dto.id,
+    title: dto.title,
+    text: dto.description || dto.text,
+    date: dto.date,
+    image: dto.image || undefined,
+    lesson_num: dto.lesson_num,
+    author: dto.author,
+    likes: Math.floor(Math.random() * 200) + 10, // Генерируем случайные лайки для демо
+    dislikes: Math.floor(Math.random() * 20) + 1, // Генерируем случайные дизлайки для демо
+  };
+});
 
 const slice = createSlice({
   name: 'posts',
@@ -239,17 +272,32 @@ const slice = createSlice({
       state.totalPages = 1;
       state.hasNextPage = false;
       state.hasPrevPage = false;
+      state.sortField = 'date';
+      state.sortOrder = 'desc';
     },
-    setPagination(state, action: PayloadAction<{
-      currentPage: number;
-      totalPages: number;
-      hasNextPage: boolean;
-      hasPrevPage: boolean;
-    }>) {
+    setPagination(
+      state,
+      action: PayloadAction<{
+        currentPage: number;
+        totalPages: number;
+        hasNextPage: boolean;
+        hasPrevPage: boolean;
+      }>,
+    ) {
       state.currentPage = action.payload.currentPage;
       state.totalPages = action.payload.totalPages;
       state.hasNextPage = action.payload.hasNextPage;
       state.hasPrevPage = action.payload.hasPrevPage;
+    },
+    setSorting(
+      state,
+      action: PayloadAction<{
+        sortField: SortField | null;
+        sortOrder: SortOrder;
+      }>,
+    ) {
+      state.sortField = action.payload.sortField;
+      state.sortOrder = action.payload.sortOrder;
     },
   },
   extraReducers: (builder) => {
@@ -266,6 +314,8 @@ const slice = createSlice({
         state.totalPages = action.payload.pagination.totalPages;
         state.hasNextPage = action.payload.pagination.hasNextPage;
         state.hasPrevPage = action.payload.pagination.hasPrevPage;
+        state.sortField = action.payload.sortField;
+        state.sortOrder = action.payload.sortOrder;
         state.error = null;
       })
       .addCase(fetchPostsByCourseGroup.rejected, (state, action) => {
@@ -294,7 +344,7 @@ const slice = createSlice({
       })
       .addCase(updateExistingPost.fulfilled, (state, action) => {
         state.loading = false;
-        const index = state.items.findIndex(post => post.id === action.payload.id);
+        const index = state.items.findIndex((post) => post.id === action.payload.id);
         if (index !== -1) {
           state.items[index] = action.payload;
         }
@@ -311,7 +361,7 @@ const slice = createSlice({
       })
       .addCase(deleteExistingPost.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = state.items.filter(post => post.id !== action.payload);
+        state.items = state.items.filter((post) => post.id !== action.payload);
         state.error = null;
       })
       .addCase(deleteExistingPost.rejected, (state, action) => {
@@ -336,7 +386,7 @@ const slice = createSlice({
   },
 });
 
-export const { setAll, setError, clear, setPagination } = slice.actions;
+export const { setAll, setError, clear, setPagination, setSorting } = slice.actions;
 export const selectPosts = (s: RootState) => s.posts.items;
 export const selectPostsLoaded = (s: RootState) => s.posts.loaded;
 export const selectPostsLoading = (s: RootState) => s.posts.loading;
@@ -348,4 +398,6 @@ export const selectCurrentPage = (s: RootState) => s.posts.currentPage;
 export const selectTotalPages = (s: RootState) => s.posts.totalPages;
 export const selectHasNextPage = (s: RootState) => s.posts.hasNextPage;
 export const selectHasPrevPage = (s: RootState) => s.posts.hasPrevPage;
+export const selectSortField = (s: RootState) => s.posts.sortField;
+export const selectSortOrder = (s: RootState) => s.posts.sortOrder;
 export default slice.reducer;

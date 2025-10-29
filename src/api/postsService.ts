@@ -1,9 +1,21 @@
 import { httpGet, httpPost, httpPut, httpDel } from './http';
 import { PostDto, Post, fromDto } from './posts.types';
 
+// Типы для сортировки
+export type SortField = 'date' | 'title' | 'text' | 'lesson_num';
+export type SortOrder = 'asc' | 'desc';
+
 // GET /blog/posts/
-export async function fetchPosts(): Promise<Post[]> {
-  const list = await httpGet<PostDto[]>('/blog/posts/');
+export async function fetchPosts(
+  sortField?: SortField,
+  sortOrder: SortOrder = 'desc',
+): Promise<Post[]> {
+  const params: Record<string, string> = {};
+  if (sortField) {
+    const ordering = sortOrder === 'desc' ? `-${sortField}` : sortField;
+    params.ordering = ordering;
+  }
+  const list = await httpGet<PostDto[]>('/blog/posts/', params);
   return list.map(fromDto);
 }
 

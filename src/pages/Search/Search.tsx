@@ -5,15 +5,15 @@ import { get } from '../../api/student';
 import PostCardBase from '../../components/common/PostCard/PostCardBase';
 import LoadingOverlay from '../../components/common/LoadingOverlay/LoadingOverlay';
 import { addQuery, selectSearchHistory } from '../../features/search/searchHistorySlice';
-import { 
-  setQuery, 
-  setLoading, 
-  setResults, 
-  setError, 
+import {
+  setQuery,
+  setLoading,
+  setResults,
+  setError,
   clearResults,
   selectSearchResults,
   selectSearchLoading,
-  selectSearchError
+  selectSearchError,
 } from '../../features/search/searchResultsSlice';
 import styles from './Search.module.css';
 
@@ -39,10 +39,10 @@ export default function Search() {
 
     const searchPosts = async () => {
       dispatch(setLoading(true));
-      
+
       try {
         console.log('Searching for:', query);
-        
+
         const response = await get<{
           count: number;
           results: Array<{
@@ -91,18 +91,20 @@ export default function Search() {
       <div className={styles.page}>
         <div className={styles.header}>
           <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
-            <Link to="/" className={styles.breadcrumbLink}>Home</Link>
+            <Link to="/" className={styles.breadcrumbLink}>
+              Home
+            </Link>
             <span className={styles.breadcrumbSeparator}>›</span>
             <span className={styles.breadcrumbCurrent}>Search</span>
           </nav>
-          
+
           <Link to="/" className={styles.backLink}>
             ← Back to blog
           </Link>
         </div>
         <h1 className={styles.title}>Search</h1>
         <p className={styles.empty}>Enter a search query to find posts</p>
-        
+
         {searchHistory.length > 0 && (
           <div className={styles.history}>
             <h3 className={styles.historyTitle}>Recent searches:</h3>
@@ -128,20 +130,20 @@ export default function Search() {
       <div className={styles.page}>
         <div className={styles.header}>
           <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
-            <Link to="/" className={styles.breadcrumbLink}>Home</Link>
+            <Link to="/" className={styles.breadcrumbLink}>
+              Home
+            </Link>
             <span className={styles.breadcrumbSeparator}>›</span>
             <span className={styles.breadcrumbCurrent}>Search</span>
           </nav>
-          
+
           <Link to="/" className={styles.backLink}>
             ← Back to blog
           </Link>
         </div>
-        
-        <h1 className={styles.title}>
-          Search results for "{query}"
-        </h1>
-        
+
+        <h1 className={styles.title}>Search results for "{query}"</h1>
+
         {error && (
           <div className={styles.error}>
             <p>Error: {error}</p>
@@ -160,7 +162,7 @@ export default function Search() {
             <p className={styles.count}>
               Found {posts.length} post{posts.length !== 1 ? 's' : ''}
             </p>
-            
+
             <div className={styles.grid}>
               {posts.map((post) => (
                 <Link key={post.id} to={`/posts/${post.id}`} className={styles.cardLink}>

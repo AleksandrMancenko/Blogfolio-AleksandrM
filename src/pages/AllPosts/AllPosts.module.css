@@ -27,6 +27,62 @@
   width: 100%;
 }
 
+.sortControls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.sortLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.sortSelect {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sortSelect:hover {
+  border-color: var(--primary);
+}
+
+.sortSelect:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.sortOrderBtn {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sortOrderBtn:hover {
+  background: var(--border);
+}
+
+.sortOrderBtn:active {
+  transform: scale(0.95);
+}
+
 /* Четкая сетка постов */
 .layout {
   display: grid;
@@ -213,7 +269,7 @@
   .layout {
     grid-template-columns: 1fr;
   }
-  
+
   .leftGrid {
     grid-template-columns: 1fr;
   }
@@ -223,11 +279,11 @@
   .page {
     padding: 24px 16px 48px;
   }
-  
+
   .pageTitle {
     font-size: 28px;
   }
-  
+
   .header {
     gap: 16px;
     margin-bottom: 24px;
@@ -238,7 +294,7 @@
   .page {
     padding: 16px 12px 32px;
   }
-  
+
   .pageTitle {
     font-size: 24px;
   }

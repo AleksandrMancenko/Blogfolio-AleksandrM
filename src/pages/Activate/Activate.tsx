@@ -36,7 +36,11 @@ export default function Activate() {
         // Извлекаем сообщение об ошибке
         let errorMessage = 'Activation failed. Please check your link or try again.';
         try {
-          if (error.message && typeof error.message === 'string' && error.message.includes('Stale token')) {
+          if (
+            error.message &&
+            typeof error.message === 'string' &&
+            error.message.includes('Stale token')
+          ) {
             errorMessage = 'This activation link has expired. Please register again.';
           } else if (error.payload) {
             const payload = error.payload;
@@ -60,9 +64,7 @@ export default function Activate() {
         <div className={styles.wrap}>
           <div className={styles.error}>
             <h1 className={styles.title}>Invalid Activation Link</h1>
-            <p className={styles.message}>
-              The activation link is invalid or incomplete.
-            </p>
+            <p className={styles.message}>The activation link is invalid or incomplete.</p>
             <Link to="/" className={styles.link}>
               Back to home
             </Link>
@@ -78,9 +80,7 @@ export default function Activate() {
         <div className={styles.wrap}>
           <div className={styles.error}>
             <h1 className={styles.title}>Activation Failed</h1>
-            <p className={styles.message}>
-              {error}
-            </p>
+            <p className={styles.message}>{error}</p>
             <div className={styles.actions}>
               <Link to="/signup" className={styles.link}>
                 Register Again
@@ -101,13 +101,10 @@ export default function Activate() {
         <div className={styles.wrap}>
           <div className={styles.content}>
             <h1 className={styles.title}>Activating Account</h1>
-            <p className={styles.message}>
-              Please wait while we activate your account...
-            </p>
+            <p className={styles.message}>Please wait while we activate your account...</p>
           </div>
         </div>
       </section>
     </LoadingOverlay>
   );
 }
-

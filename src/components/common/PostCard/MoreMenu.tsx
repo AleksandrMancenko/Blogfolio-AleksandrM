@@ -46,15 +46,15 @@ export default function MoreMenu({ onEdit, onDelete }: Props) {
   const toggleMenu = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     if (!isOpen && buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
       const menuWidth = 120;
-      
+
       // Рассчитываем позицию для портала
       const left = Math.min(rect.right - menuWidth, window.innerWidth - menuWidth - 10);
       const top = rect.bottom + 4;
-      
+
       setDropdownStyle({
         position: 'fixed',
         top: `${top}px`,
@@ -62,7 +62,7 @@ export default function MoreMenu({ onEdit, onDelete }: Props) {
         zIndex: 10000,
       });
     }
-    
+
     setIsOpen(!isOpen);
   };
 
@@ -85,11 +85,7 @@ export default function MoreMenu({ onEdit, onDelete }: Props) {
 
   const dropdownContent = isOpen ? (
     <div className={styles.dropdown} style={dropdownStyle}>
-      <button
-        className={styles.menuItem}
-        type="button"
-        onClick={handleEdit}
-      >
+      <button className={styles.menuItem} type="button" onClick={handleEdit}>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path
             d="M11.333 2a1.333 1.333 0 0 1 1.334 1.333v9.334a1.333 1.333 0 0 1-1.334 1.333H4.667a1.333 1.333 0 0 1-1.334-1.333V3.333A1.333 1.333 0 0 1 4.667 2h6.666zM4.667 3.333v9.334h6.666V3.333H4.667z"
@@ -102,11 +98,7 @@ export default function MoreMenu({ onEdit, onDelete }: Props) {
         </svg>
         Edit
       </button>
-      <button
-        className={styles.menuItem}
-        type="button"
-        onClick={handleDelete}
-      >
+      <button className={styles.menuItem} type="button" onClick={handleDelete}>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path
             d="M6.5 2a.5.5 0 0 0-.5.5v1H4a.5.5 0 0 0 0 1h8a.5.5 0 0 0 0-1h-2v-1a.5.5 0 0 0-.5-.5h-3zM4 5.5a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.5-.5H4z"
@@ -135,7 +127,7 @@ export default function MoreMenu({ onEdit, onDelete }: Props) {
           </svg>
         </button>
       </div>
-      
+
       {dropdownContent && createPortal(dropdownContent, document.body)}
     </>
   );
