@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { signIn, signOut, verifyToken, refreshToken } from '../../api/authService';
+import { signIn, signOut, verifyToken, refreshToken, registerUser, activateUser } from '../../api/authService';
 import { addNotification } from '../notifications/notificationSlice';
 
 export type User = {
@@ -83,6 +83,81 @@ export const refreshUserToken = createAsyncThunk(
   }
 );
 
+// Async thunk для регистрации пользователя
+export const registerNewUser = createAsyncThunk(
+  'auth/register',
+  async (data: { email: string; username: string; password: string }, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await registerUser(data);
+      dispatch(addNotification({
+        type: 'success',
+        title: 'Registration Successful',
+        message: 'Please check your email to confirm your account.',
+        duration: 5000,
+      }));
+      return response;
+    } catch (error: any) {
+      let errorMessage = 'Registration failed';
+      try {
+        // Пытаемся распарсить JSON ошибки
+        const errorData = typeof error.message === 'string' && error.message.startsWith('{') 
+          ? JSON.parse(error.message) 
+          : (typeof error.message === 'string' && error.message.includes('{') 
+            ? JSON.parse(error.message) 
+            : error.message);
+            
+        if (typeof errorData === 'object' && errorData !== null) {
+          // Форматируем ошибки валидации
+          const errors = Object.entries(errorData).map(([field, messages]: [string, any]) => {
+            if (Array.isArray(messages)) {
+              return `${field}: ${messages.join(', ')}`;
+            }
+            return `${field}: ${messages}`;
+          });
+          errorMessage = errors.join('; ');
+        } else {
+          errorMessage = String(errorData);
+        }
+      } catch {
+        errorMessage = error.message || 'Registration failed';
+      }
+      
+      dispatch(addNotification({
+        type: 'error',
+        title: 'Registration Failed',
+        message: errorMessage,
+        duration: 5000,
+      }));
+      return rejectWithValue(errorMessage);
+    }
+  }
+);
+
+// Async thunk для активации пользователя
+export const activateAccount = createAsyncThunk(
+  'auth/activate',
+  async (data: { uid: string; token: string }, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await activateUser(data.uid, data.token);
+      dispatch(addNotification({
+        type: 'success',
+        title: 'Account Activated',
+        message: 'Your account has been successfully activated!',
+        duration: 5000,
+      }));
+      return response;
+    } catch (error: any) {
+      dispatch(addNotification({
+        type: 'error',
+        title: 'Activation Failed',
+        message: error.message || 'Invalid activation link',
+        duration: 5000,
+      }));
+      return rejectWithValue(error.message || 'Activation failed');
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -156,6 +231,32 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
         state.accessToken = null;
         state.refreshToken = null;
+        state.error = action.payload as string;
+      })
+      // Register cases
+      .addCase(registerNewUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(registerNewUser.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(registerNewUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      // Activate cases
+      .addCase(activateAccount.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(activateAccount.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(activateAccount.rejected, (state, action) => {
+        state.isLoading = false;
         state.error = action.payload as string;
       });
   },
