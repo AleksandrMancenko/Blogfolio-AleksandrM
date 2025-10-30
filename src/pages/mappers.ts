@@ -16,5 +16,7 @@ export function articleToPost(a: Article): Post {
     lesson_num: 0,
     title: a.title,
     author: 1,
+    likes: Math.floor(Math.random() * 200) + 10,
+    dislikes: Math.floor(Math.random() * 20) + 1,
   };
 }

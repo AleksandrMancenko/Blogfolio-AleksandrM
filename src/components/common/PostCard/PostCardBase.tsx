@@ -1,9 +1,12 @@
 import styles from './PostCard.module.css';
-import type { Post } from './PostCard.types';
-import { LikeIcon, DislikeIcon, BookmarkIcon, BookmarkFilledIcon, MoreIcon } from './icons';
-import { useAppDispatch } from '../../../store/hooks';
+import type { Post } from '../../../api/posts.types';
+import { LikeIcon, DislikeIcon, BookmarkIcon, BookmarkFilledIcon } from './icons';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { selectIsAuthenticated } from '../../../features/auth/authSlice';
 import { openSingle } from '../../../features/preview/previewSlice';
-import React from 'react';
+import { initializePost, toggleLike, toggleDislike } from '../../../features/likes/likesSlice';
+import MoreMenu from './MoreMenu';
+import React, { useEffect } from 'react';
 
 type Variant = 'wide' | 'vertical' | 'compact' | 'featured';
 
@@ -13,7 +16,11 @@ type Props = {
   href?: string;
   onBookmarkToggle?: () => void;
   isBookmarked?: boolean;
-  hideDivider?: boolean; // ← добавили
+  hideDivider?: boolean;
+  onLike?: () => void;
+  onDislike?: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
 };
 
 export default function PostCardBase({
@@ -23,9 +30,30 @@ export default function PostCardBase({
   onBookmarkToggle,
   isBookmarked,
   hideDivider,
+  onLike,
+  onDislike,
+  onEdit,
+  onDelete,
 }: Props) {
   const dispatch = useAppDispatch();
   const isCompact = variant === 'compact';
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+
+  // Получаем состояние лайков для этого поста
+  const likesState = useAppSelector((state) => state.likes[post.id]);
+
+  // Инициализируем пост в Redux при первом рендере
+  useEffect(() => {
+    if (!likesState) {
+      dispatch(
+        initializePost({
+          postId: post.id,
+          likes: post.likes,
+          dislikes: post.dislikes,
+        }),
+      );
+    }
+  }, [dispatch, post.id, post.likes, post.dislikes, likesState]);
 
   const openPreview = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -38,6 +66,20 @@ export default function PostCardBase({
     e.preventDefault();
     e.stopPropagation();
     onBookmarkToggle?.();
+  };
+
+  const handleLike = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(toggleLike(post.id));
+    onLike?.();
+  };
+
+  const handleDislike = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(toggleDislike(post.id));
+    onDislike?.();
   };
 
   const Media = post.image ? (
@@ -89,30 +131,42 @@ export default function PostCardBase({
 
       <div className={styles.actions} aria-label="Post actions">
         <div className={styles.actionsLeft}>
-          <button className={styles.iconBtn} type="button" aria-label="Like">
+          <button
+            className={`${styles.iconBtn} ${likesState?.userLiked ? styles.iconBtnActive : ''}`}
+            type="button"
+            aria-label="Like"
+            onClick={handleLike}
+          >
             <LikeIcon className={styles.icon} />
+            <span className={styles.counter}>{likesState?.likes ?? post.likes}</span>
           </button>
-          <button className={styles.iconBtn} type="button" aria-label="Dislike">
+          <button
+            className={`${styles.iconBtn} ${likesState?.userDisliked ? styles.iconBtnActive : ''}`}
+            type="button"
+            aria-label="Dislike"
+            onClick={handleDislike}
+          >
             <DislikeIcon className={styles.icon} />
+            <span className={styles.counter}>{likesState?.dislikes ?? post.dislikes}</span>
           </button>
         </div>
         <div className={styles.actionsRight}>
-          <button
-            className={`${styles.iconBtn} ${isBookmarked ? styles.iconBtnActive : ''}`}
-            type="button"
-            aria-label={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
-            aria-pressed={isBookmarked ? true : false}
-            onClick={handleBookmark}
-          >
-            {isBookmarked ? (
-              <BookmarkFilledIcon className={styles.icon} />
-            ) : (
-              <BookmarkIcon className={styles.icon} />
-            )}
-          </button>
-          <button className={styles.iconBtn} type="button" aria-label="More">
-            <MoreIcon className={styles.icon} />
-          </button>
+          {isAuthenticated && (
+            <button
+              className={`${styles.iconBtn} ${isBookmarked ? styles.iconBtnActive : ''}`}
+              type="button"
+              aria-label={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
+              aria-pressed={isBookmarked ? true : false}
+              onClick={handleBookmark}
+            >
+              {isBookmarked ? (
+                <BookmarkFilledIcon className={styles.icon} />
+              ) : (
+                <BookmarkIcon className={styles.icon} />
+              )}
+            </button>
+          )}
+          <MoreMenu onEdit={onEdit || (() => {})} onDelete={onDelete || (() => {})} />
         </div>
       </div>
 

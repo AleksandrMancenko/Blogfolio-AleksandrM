@@ -1,93 +1,75 @@
 import { useParams, Link } from 'react-router-dom';
-import { useEffect, useMemo, useState } from 'react';
-import { get } from '../../api/student';
+import { useEffect, useMemo } from 'react';
 import styles from './SelectedPost.module.css';
-import { useAppSelector } from '../../store/hooks';
-import { selectPosts } from '../../features/posts/postsSlice';
-import type { Post as CardPost } from '../../components/common/PostCard/PostCard.types';
-
-type PostDto = {
-  id: number;
-  image: string | null;
-  text: string;
-  date: string;
-  lesson_num: number;
-  title: string;
-  description: string;
-  author: number;
-};
-
-function dtoToPost(dto: PostDto): CardPost {
-  return {
-    id: dto.id,
-    title: dto.title,
-    text: dto.description || dto.text,
-    date: dto.date,
-    image: dto.image || undefined,
-    lesson_num: dto.lesson_num,
-    author: dto.author,
-  };
-}
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+  fetchPostById,
+  selectCurrentPost,
+  selectCurrentPostLoading,
+  selectCurrentPostError,
+  selectPosts,
+} from '../../features/posts/postsSlice';
+import LoadingOverlay from '../../components/common/LoadingOverlay';
+import type { Post } from '../../api/posts.types';
 
 const USE_MOCK = process.env.REACT_APP_USE_MOCK === '1';
 
 export default function SelectedPost() {
   const params = useParams<{ id: string }>();
   const id = useMemo(() => Number(params.id), [params.id]);
+  const dispatch = useAppDispatch();
 
-  const all = useAppSelector(selectPosts);
-
-  const [post, setPost] = useState<CardPost | null>(null);
-  const [err, setErr] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  // Получаем данные из Redux store
+  const currentPost = useAppSelector(selectCurrentPost);
+  const loading = useAppSelector(selectCurrentPostLoading);
+  const error = useAppSelector(selectCurrentPostError);
+  const allPosts = useAppSelector(selectPosts);
 
   useEffect(() => {
-    let cancelled = false;
-
-    async function load() {
-      if (!Number.isFinite(id)) {
-        setErr('Invalid id');
-        setLoading(false);
-        return;
-      }
-
-      setLoading(true);
-      setErr(null);
-
-      // 1) быстрый рендер из Redux
-      const fromStore = all.find((x) => x.id === id) || null;
-      if (fromStore) {
-        setPost(fromStore);
-        if (USE_MOCK) {
-          setLoading(false);
-          return;
-        }
-      }
-
-      // 2) в боевом режиме — дозагрузка по API
-      if (!USE_MOCK) {
-        try {
-          const dto = await get<PostDto>(`/blog/posts/${id}/`);
-          if (!cancelled) setPost(dtoToPost(dto));
-        } catch (e) {
-          if (!cancelled) setErr(String(e));
-        } finally {
-          if (!cancelled) setLoading(false);
-        }
-      } else {
-        if (!cancelled) setLoading(false);
-      }
+    if (!Number.isFinite(id)) {
+      return;
     }
 
-    load();
-    return () => {
-      cancelled = true;
-    };
-  }, [id, all]);
+    // Сначала проверяем, есть ли пост в списке всех постов
+    const postFromList = allPosts.find((post) => post.id === id);
 
-  if (!Number.isFinite(id)) return <div style={{ padding: 24 }}>Invalid post id</div>;
-  if (loading) return <div style={{ padding: 24 }}>Loading…</div>;
-  if (err || !post) return <div style={{ padding: 24 }}>Failed to load: {err ?? 'Not found'}</div>;
+    if (postFromList && USE_MOCK) {
+      // В mock режиме используем данные из списка
+      return;
+    }
+
+    // Загружаем пост по API (публичный запрос, не требует авторизации)
+    dispatch(fetchPostById(id));
+  }, [id, dispatch, allPosts]);
+
+  if (!Number.isFinite(id)) {
+    return (
+      <div className={styles.page}>
+        <div style={{ padding: 24 }}>Invalid post id</div>
+      </div>
+    );
+  }
+
+  // В mock режиме используем пост из списка
+  const post = USE_MOCK ? allPosts.find((p) => p.id === id) : currentPost;
+
+  if (loading) {
+    return (
+      <div className={styles.page}>
+        <LoadingOverlay isLoading={true} message="Loading post...">
+          <div style={{ padding: 24 }}>Loading...</div>
+        </LoadingOverlay>
+      </div>
+    );
+  }
+
+  if (error || !post) {
+    return (
+      <div className={styles.page}>
+        <div style={{ padding: 24 }}>Failed to load: {error ?? 'Post not found'}</div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.page}>
@@ -100,6 +82,7 @@ export default function SelectedPost() {
           <h1 className={styles.title}>{post.title}</h1>
           <div className={styles.meta}>
             <time dateTime={post.date}>{new Date(post.date).toLocaleDateString()}</time>
+            <span className={styles.lesson}>Lesson {post.lesson_num}</span>
           </div>
         </header>
 

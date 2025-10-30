@@ -1,70 +1,114 @@
-# Getting Started with Create React App
+# Blogfolio - Personal Blog Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern React-based blog platform built with TypeScript, Redux Toolkit, and styled-components.
 
-## Available Scripts
+## 🚀 Features
 
-In the project directory, you can run:
+- **Modern UI/UX**: Clean, responsive design with dark/light theme support
+- **Authentication**: JWT-based user authentication system with profile management
+- **Post Management**: Create, read, update, and delete blog posts with image upload
+- **Search & Filter**: Real-time search functionality with history
+- **Favorites**: Save and manage favorite posts
+- **Likes & Dislikes**: Interactive post feedback system
+- **Sorting**: Sort posts by date, title, text, or lesson number
+- **Pagination**: Browse posts with page navigation
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
 
-### `npm start`
+## 🛠️ Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Frontend**: React 18, TypeScript
+- **State Management**: Redux Toolkit
+- **Routing**: React Router v7
+- **Styling**: CSS Modules + Global CSS Variables
+- **Image Upload**: react-images-uploading
+- **API**: RESTful API integration
+- **Build Tool**: Create React App
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📦 Installation
 
-### `npm test`
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd Blogfolio-AleksandrM
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Install dependencies:
+```bash
+npm install
+```
 
-### `npm run build`
+3. Start the development server:
+```bash
+npm start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The app will open at [http://localhost:3000](http://localhost:3000)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🎯 Available Scripts
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- `npm start` - Runs the app in development mode
+- `npm run build` - Builds the app for production
+- `npm test` - Launches the test runner
 
-### `npm run eject`
+## 📁 Project Structure
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+src/
+├── api/           # API services and HTTP client
+│   ├── authService.ts    # Authentication endpoints
+│   ├── postsService.ts   # Posts CRUD operations
+│   └── http.ts           # HTTP client
+├── components/    # Reusable UI components
+│   └── common/    # Shared components (Header, OverlayMenu, PostCard, etc.)
+├── features/      # Redux slices and business logic
+│   ├── auth/      # Authentication state
+│   ├── posts/     # Posts management
+│   ├── favorites/ # Favorite posts
+│   ├── likes/     # Like/dislike functionality
+│   └── search/    # Search functionality
+├── layouts/       # Page layouts
+├── pages/         # Application pages
+├── store/         # Redux store configuration
+└── styles/        # Global styles and themes
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🔧 Key Features Explained
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Authentication
+- JWT-based authentication with access and refresh tokens
+- User profile management
+- Protected routes requiring authentication
+- Logout functionality
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Posts
+- View posts with pagination (12 per page)
+- Sort by: date, title, text, lesson_num
+- Sort order: ascending or descending
+- Create posts with image upload
+- Like/dislike posts
+- Add posts to favorites
 
-## Learn More
+### Search
+- Real-time search autocomplete
+- Search history
+- Results page with highlighted matches
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### UI/UX
+- Light and dark theme support
+- Responsive design
+- Loading states and error handling
+- Toast notifications
+- Image preview modal
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🔑 Environment Variables
 
-### Code Splitting
+The app connects to:
+- API Base URL: `https://studapi.teachmeskills.by`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 📝 License
 
-### Analyzing the Bundle Size
+This project is private and proprietary.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 👤 Author
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Aleksandr Malkin

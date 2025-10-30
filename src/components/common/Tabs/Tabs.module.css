@@ -1,49 +1,55 @@
-/* Длинный СВЕТЛЫЙ трек на всю ширину контейнера табов */
+/* Табы с слайдером во всю длину как в Figma */
 .tabs {
   position: relative;
   display: flex;
-  gap: 24px;
+  gap: 32px;
   width: 100%;
-  padding-bottom: 12px; /* место под трек/индикатор */
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
 }
-/* .tabs::after{
-  content:"";
-  position:absolute;
-  left:0; right:0; bottom:0;
-  height:1px;
-  background: var(--border, #E5E7EB);
-  pointer-events:none;
-} */
 
 /* Кнопки табов */
 .tabBtn {
   background: none;
   border: 0;
   padding: 0;
-  color: var(--muted, #6b7280);
+  color: var(--muted);
   cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s ease;
 }
+
+.tabBtn:hover {
+  color: var(--text);
+}
+
 .tabBtn[aria-selected='true'] {
-  color: var(--text, #111827);
+  color: var(--text);
   font-weight: 600;
 }
 
-/* Текст — якорь индикатора */
+/* Текст таба */
 .label {
   position: relative;
   display: inline-block;
-  padding-bottom: 10px; /* визуальный отступ */
-  line-height: 1.2;
+  padding-bottom: 12px;
+  line-height: 1.4;
+  font-size: 16px;
 }
 
-/* ТЁМНЫЙ индикатор поверх трека (перекрывает его) */
+/* Слайдер под активным табом - во всю длину */
 .tabBtn[aria-selected='true'] .label::after {
   content: '';
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0; /* ровно на треке */
+  bottom: -13px;
   height: 2px;
-  background: var(--text, #111827);
-  border-radius: 2px;
+  background: var(--text);
+  border-radius: 1px;
+}
+
+/* Темная тема */
+:root[data-theme='dark'] .tabs {
+  border-bottom-color: var(--border);
 }

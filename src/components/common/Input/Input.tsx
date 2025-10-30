@@ -2,7 +2,7 @@ import React, { type Dispatch, type SetStateAction, type InputHTMLAttributes } f
 import { useId } from 'react';
 import styles from './Input.module.css';
 
-type InputType = 'text' | 'email' | 'password';
+type InputType = 'text' | 'email' | 'password' | 'number';
 
 type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'value' | 'onChange'> & {
   id?: string;

@@ -6,4 +6,6 @@ export type Post = {
   lesson_num: number;
   title: string;
   author: number | string;
+  likes: number;
+  dislikes: number;
 };

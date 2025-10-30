@@ -37,7 +37,10 @@ async function http<T>(path: string, options: RequestInit = {}): Promise<T> {
   return (await res.json()) as T;
 }
 
-export const httpGet = <T>(path: string) => http<T>(path);
+export const httpGet = <T>(path: string, params?: Record<string, string>) => {
+  const url = params ? `${path}?${new URLSearchParams(params).toString()}` : path;
+  return http<T>(url);
+};
 export const httpPost = <T>(path: string, body?: any) =>
   http<T>(path, { method: 'POST', body: body instanceof FormData ? body : JSON.stringify(body) });
 export const httpPut = <T>(path: string, body?: any) =>

@@ -1,17 +1,49 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import styles from './Header.module.css';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { openMenu } from '../../../features/ui/uiSlice';
 import { setQuery } from '../../../features/search/searchSlice';
+import { addQuery } from '../../../features/search/searchHistorySlice';
+import { fetchUserProfile, selectUser } from '../../../features/auth/authSlice';
+import SearchAutocomplete from '../SearchAutocomplete';
 import { FormEvent } from 'react';
 
 export default function Header() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const query = useAppSelector((s) => s.search.query);
+  const user = useAppSelector(selectUser);
+
+  // Загружаем профиль пользователя при монтировании компонента
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken && !user) {
+      dispatch(fetchUserProfile());
+    }
+  }, [dispatch, user]);
 
   const onSubmit = (e: FormEvent) => {
-    e.preventDefault(); // не уходим со страницы
-    // здесь ничего не делаем — AllPosts сам отфильтрует по Redux-значению
+    e.preventDefault();
+    if (query.trim()) {
+      // Добавляем запрос в историю
+      dispatch(addQuery(query.trim()));
+      // Переходим на страницу поиска с запросом
+      navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+      // Очищаем поле поиска после перехода
+      dispatch(setQuery(''));
+    }
+  };
+
+  const handleSearchSubmit = () => {
+    if (query.trim()) {
+      // Добавляем запрос в историю
+      dispatch(addQuery(query.trim()));
+      // Переходим на страницу поиска с запросом
+      navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+      // Очищаем поле поиска после перехода
+      dispatch(setQuery(''));
+    }
   };
 
   return (
@@ -35,13 +67,12 @@ export default function Header() {
 
       {/* центр: форма поиска */}
       <form className={styles.search} role="search" onSubmit={onSubmit}>
-        <input
-          className={styles.searchInput}
-          type="text"
-          placeholder="Search…"
+        <SearchAutocomplete
           value={query}
-          onChange={(e) => dispatch(setQuery(e.target.value))}
-          aria-label="Search"
+          onChange={(value) => dispatch(setQuery(value))}
+          onSubmit={handleSearchSubmit}
+          placeholder="Search…"
+          className={styles.searchInput}
         />
         <button type="submit" className={styles.searchBtn} aria-label="Search">
           <svg
@@ -62,10 +93,36 @@ export default function Header() {
         </button>
       </form>
 
-      {/* справа: AM + имя */}
+      {/* справа: аватар и имя (имя только для авторизованных) */}
       <Link to="/" className={styles.user} aria-label="Profile">
-        <span className={styles.userBadge}>AM</span>
-        <span className={styles.userName}>Artem Malkin</span>
+        <span className={styles.userBadge}>
+          {user?.username ? (
+            user.username.substring(0, 2).toUpperCase()
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          )}
+        </span>
+        {user && (
+          <span className={styles.userName}>
+            {user.first_name && user.last_name
+              ? `${user.first_name} ${user.last_name}`
+              : user.username}
+          </span>
+        )}
       </Link>
     </header>
   );

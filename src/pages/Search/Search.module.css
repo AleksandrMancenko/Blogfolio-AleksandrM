@@ -1,25 +1,181 @@
 .page {
-  max-width: 980px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 24px 16px;
+  padding: 32px 24px 64px;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 56px - 48px);
 }
+
 .header {
-  margin: 0 0 16px;
-  font-weight: 600;
-  color: #111827;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
+.backLink {
+  display: inline-block;
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.2s ease;
+}
+
+.backLink:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  color: #6b7280; /* muted */
+}
+
+.breadcrumbLink {
+  color: #6b7280;
+  text-decoration: none;
+}
+
+.breadcrumbLink:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbSeparator {
+  color: #6b7280;
+}
+
+.breadcrumbCurrent {
+  color: #6b7280;
+}
+
+.title {
+  margin: 0 0 24px;
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.empty p {
+  margin: 0 0 8px;
+}
+
+.empty p:last-child {
+  margin: 0;
+  font-size: 14px;
+}
+
+.error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  color: #dc2626;
+}
+
+.results {
+  margin-top: 24px;
+}
+
+.count {
+  margin: 0 0 24px;
+  font-size: 16px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
 .grid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
   align-items: start;
 }
-.list {
-  display: grid;
-  gap: 16px;
+
+.cardLink {
+  display: block;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease;
 }
-.right {
+
+.cardLink:hover {
+  transform: translateY(-2px);
+}
+
+/* История поиска */
+.history {
+  margin-top: 32px;
+  padding: 24px;
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.historyTitle {
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.historyList {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.historyItem {
+  padding: 8px 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.historyItem:hover {
+  background: var(--border);
+  transform: translateY(-1px);
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+  .page {
+    padding: 24px 16px 48px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 16px 12px 32px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
 }
