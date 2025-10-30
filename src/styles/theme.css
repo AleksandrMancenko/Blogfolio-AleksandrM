@@ -40,9 +40,9 @@ hr,
   background: var(--border) !important;
 }
 
-/* Карточки постов (перекроем цвета из CSS-модулей) */
+/* Карточки: не навязываем общий фон, оставляем прозрачным по умолчанию */
 :root[data-theme='dark'] [class*='card'] {
-  background: var(--surface) !important;
+  background: transparent !important;
   color: var(--text) !important;
 }
 :root[data-theme='dark'] [class*='title'],
