@@ -1,0 +1,49 @@
+/* Длинный СВЕТЛЫЙ трек на всю ширину контейнера табов */
+.tabs {
+  position: relative;
+  display: flex;
+  gap: 24px;
+  width: 100%;
+  padding-bottom: 12px; /* место под трек/индикатор */
+}
+/* .tabs::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:0;
+  height:1px;
+  background: var(--border, #E5E7EB);
+  pointer-events:none;
+} */
+
+/* Кнопки табов */
+.tabBtn {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--muted, #6b7280);
+  cursor: pointer;
+}
+.tabBtn[aria-selected='true'] {
+  color: var(--text, #111827);
+  font-weight: 600;
+}
+
+/* Текст — якорь индикатора */
+.label {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px; /* визуальный отступ */
+  line-height: 1.2;
+}
+
+/* ТЁМНЫЙ индикатор поверх трека (перекрывает его) */
+.tabBtn[aria-selected='true'] .label::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0; /* ровно на треке */
+  height: 2px;
+  background: var(--text, #111827);
+  border-radius: 2px;
+}

@@ -1,0 +1,50 @@
+.screen {
+  min-height: calc(100dvh - 56px - 48px);
+  /* background: var(--bg); */
+  display: grid;
+  place-items: center;
+}
+.wrap {
+  width: 520px;
+  max-width: calc(100% - 32px);
+  transform: translateY(-32px);
+}
+.back {
+  display: inline-block;
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: none;
+}
+.back:hover {
+  text-decoration: underline;
+}
+.title {
+  margin: 0 0 12px;
+  font-size: 32px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: var(--text);
+  text-align: left;
+}
+.form {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+.submit {
+  margin-top: 4px;
+}
+.submit :where(button) {
+  width: 100%;
+  display: block;
+}
+.note {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}

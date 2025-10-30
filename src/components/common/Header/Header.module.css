@@ -1,0 +1,99 @@
+.header {
+  background: #233c7b; /* брендовый синий */
+  color: #fff;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+}
+
+/* левая и правая кнопки */
+.iconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 0;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: pointer;
+}
+.iconBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* поиск по центру */
+.search {
+  flex: 1;
+  max-width: 560px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.searchInput {
+  flex: 1;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border, #e5e7eb);
+  background: #fff;
+  color: #111827;
+  outline: none;
+}
+.searchInput::placeholder {
+  color: #9ca3af;
+}
+.searchBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--border, #e5e7eb);
+  background: #fff;
+  color: #111827;
+  cursor: pointer;
+}
+.searchBtn:hover {
+  background: #f3f4f6;
+}
+
+/* справа пользователь */
+.user {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  text-decoration: none;
+}
+.userBadge {
+  min-width: 28px;
+  height: 28px;
+  border-radius: 6px; /* квадратная, не круглая */
+  background: #1e40af;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+.userName {
+  font-size: 14px;
+}
+
+/* тёмная тема: поле остаётся читабельным на синем фоне */
+:root[data-theme='dark'] .searchInput,
+:root[data-theme='dark'] .searchBtn {
+  background: #fff;
+  color: #111827;
+  border-color: var(--border, #334155);
+}

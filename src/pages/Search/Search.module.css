@@ -1,0 +1,25 @@
+.page {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+.header {
+  margin: 0 0 16px;
+  font-weight: 600;
+  color: #111827;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.list {
+  display: grid;
+  gap: 16px;
+}
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
