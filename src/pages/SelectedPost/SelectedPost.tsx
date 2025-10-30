@@ -10,7 +10,7 @@ import {
   selectPosts,
 } from '../../features/posts/postsSlice';
 import LoadingOverlay from '../../components/common/LoadingOverlay';
-import type { Post } from '../../api/posts.types';
+// import type { Post } from '../../api/posts.types';
 
 const USE_MOCK = process.env.REACT_APP_USE_MOCK === '1';
 

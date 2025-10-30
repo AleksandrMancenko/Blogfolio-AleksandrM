@@ -40,9 +40,14 @@ hr,
   background: var(--border) !important;
 }
 
-/* Карточки постов (перекроем цвета из CSS-модулей) */
-:root[data-theme='dark'] [class*='card'] {
+/* Карточки: прозрачные по умолчанию; в светлой теме задаём surface */
+:root:not([data-theme='dark']) [class*='card'],
+:root[data-theme='light'] [class*='card'] {
   background: var(--surface) !important;
+}
+
+:root[data-theme='dark'] [class*='card'] {
+  background: transparent !important;
   color: var(--text) !important;
 }
 :root[data-theme='dark'] [class*='title'],

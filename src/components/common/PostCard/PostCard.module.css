@@ -2,11 +2,12 @@
   display: grid;
   gap: 16px;
   padding: 20px;
-  background: var(--surface);
+  background: transparent;
   border-radius: 12px;
   align-self: start;
   height: 100%;
-  transition: all 0.2s ease;
+  /* Избегаем анимации фона при переключении темы */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
@@ -231,9 +232,9 @@
   overflow: hidden;
 }
 
-/* Темная тема */
+/* Темная тема: карточка без дополнительного фона (на чистом фоне страницы) */
 :root[data-theme='dark'] .card {
-  background: var(--surface);
+  background: transparent !important;
 }
 
 :root[data-theme='dark'] .iconBtn:hover {

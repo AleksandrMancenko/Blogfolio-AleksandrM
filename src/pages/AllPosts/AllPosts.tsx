@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Tabs, { type TabItem } from '../../components/common/Tabs';
 import PostCardBase from '../../components/common/PostCard/PostCardBase';
 import LoadingOverlay from '../../components/common/LoadingOverlay';
-import type { Post } from '../../api/posts.types';
+// import type { Post } from '../../api/posts.types';
 import styles from './AllPosts.module.css';
 import { useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -23,7 +23,7 @@ import {
   selectSortOrder,
   setPagination,
   setSorting,
-  clear,
+  // clear,
 } from '../../features/posts/postsSlice';
 import { clearResults } from '../../features/search/searchResultsSlice';
 import { clearQuery } from '../../features/search/searchSlice';
@@ -290,7 +290,7 @@ export default function AllPosts() {
       // Левая колонка: 4 средних поста, правая колонка: 8 маленьких постов
       return [null, arr.slice(0, 4), arr.slice(4, 12)];
     }
-  }, [filtered, currentPage, isFavView]);
+  }, [filtered, currentPage, isFavView, hasNextPage, hasPrevPage, totalPages]);
 
   if (postsErr)
     return (

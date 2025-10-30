@@ -95,9 +95,9 @@ export default function SignIn() {
 
             {/* Ссылка слева под полями */}
             <div className={styles.row}>
-              <a href="#" className={styles.linkMuted}>
+              <button type="button" className={styles.linkMuted} aria-label="Forgot password">
                 Forgot password?
-              </a>
+              </button>
             </div>
 
             {/* Кнопка на всю ширину */}
