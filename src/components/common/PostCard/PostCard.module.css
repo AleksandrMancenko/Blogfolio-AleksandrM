@@ -1,0 +1,241 @@
+.card {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+  background: var(--surface);
+  border-radius: 12px;
+  align-self: start;
+  height: 100%;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-1px);
+}
+
+/* media */
+.media {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .media img {
+  transform: scale(1.05);
+}
+
+.mediaBtn {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.placeholder {
+  background: var(--surface-2);
+  border-radius: 8px;
+}
+
+/* content */
+.content {
+  display: grid;
+  gap: 12px;
+  min-height: 0;
+}
+
+.meta,
+.date {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.title,
+.titleLink {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.3;
+}
+
+.titleLink:hover {
+  color: var(--link);
+}
+
+.text {
+  margin: 0;
+  color: var(--text);
+  opacity: 0.8;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* icons */
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.iconBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: 0;
+  padding: 8px;
+  cursor: pointer;
+  color: var(--muted);
+  line-height: 1;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.iconBtn:hover {
+  color: var(--link);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.iconBtn:active {
+  transform: scale(0.95);
+}
+
+.iconBtnActive {
+  color: #ef4444;
+}
+
+.counter {
+  font-size: 12px;
+  font-weight: 500;
+  color: inherit;
+}
+
+/* actions: ВСЕГДА во всю ширину карточки */
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  grid-column: 1 / -1;
+  margin-top: auto;
+}
+
+.actionsLeft,
+.actionsRight {
+  display: flex;
+  gap: 12px;
+}
+
+/* нижний разделитель — убираем, используем border карточки */
+.divider {
+  display: none;
+}
+
+/* вариации */
+.wide {
+  grid-template-columns: 1fr 300px;
+  column-gap: 24px;
+  align-items: start;
+}
+
+.wide .media {
+  aspect-ratio: 4/3;
+}
+
+.vertical {
+  grid-template-columns: 1fr;
+}
+
+.vertical .media {
+  aspect-ratio: 16/9;
+}
+
+/* compact: текст слева, миниатюра справа */
+.compact {
+  grid-template-columns: 1fr 100px;
+  column-gap: 16px;
+  align-items: center;
+  padding: 16px;
+}
+
+.compact .media {
+  width: 100px;
+  height: 100px;
+}
+
+.compact .media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.compact .content {
+  gap: 8px;
+  min-width: 0;
+}
+
+.compact .title,
+.compact .titleLink {
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+/* featured - заглавный пост чуть ниже по высоте */
+.featured {
+  grid-template-columns: 1fr;
+  padding: 20px;
+}
+
+.featured .media {
+  order: 1;
+  aspect-ratio: 2.5/1;
+}
+
+.featured .content {
+  order: 2;
+}
+
+.featured .actions {
+  order: 3;
+}
+
+.featured .title,
+.featured .titleLink {
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.featured .text {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* усечение текста */
+.text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Темная тема */
+:root[data-theme='dark'] .card {
+  background: var(--surface);
+}
+
+:root[data-theme='dark'] .iconBtn:hover {
+  background: rgba(255, 255, 255, 0.05);
+}

@@ -1,0 +1,118 @@
+/* Серый фон на ВСЮ ширину области между хедером и футером */
+.screen {
+  background: #f3f4f6;
+  min-height: calc(100dvh - 56px - 48px);
+  display: grid;
+  place-content: start center;
+  padding: 96px 16px 32px;
+
+  /* FULL-BLEED — выходим из центрирующего контейнера main */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+/* Узкая колонка контента по центру */
+.wrap {
+  width: 720px;
+  max-width: 100%;
+}
+
+/* Ссылка "Back to home" */
+.back {
+  display: inline-block;
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: #6b7280;
+  text-decoration: none;
+}
+.back:hover {
+  text-decoration: underline;
+}
+
+/* Заголовок слева над формой */
+.title {
+  margin: 0 0 16px;
+  font-size: 32px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #111827;
+  text-align: left;
+}
+
+/* Карточка формы */
+.form {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+/* Сообщение об ошибке */
+.errorMessage {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 16px;
+  color: #dc2626;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Поле для загрузки файла */
+.fileInput {
+  margin-bottom: 16px;
+}
+
+.fileLabel {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.fileInputField {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+}
+
+.fileInputField:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.fileInputField:disabled {
+  background: #f9fafb;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+.fileInfo {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Кнопка на всю ширину */
+.submit {
+  margin-top: 12px;
+}
+.submit :where(button) {
+  display: block;
+  width: 100%;
+}
+
+/* Сообщения об ошибках валидации полей */
+.fieldError {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--error, #dc2626);
+  padding-left: 4px;
+}

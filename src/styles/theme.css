@@ -1,0 +1,69 @@
+/* === Глобальные переменные темы === */
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --primary: #3b82f6;
+  --text-muted: #6b7280;
+}
+
+:root[data-theme='dark'] {
+  --bg: #0f172a; /* фон страницы */
+  --surface: #1f2937; /* фон карточек/панелей */
+  --surface-2: #374151; /* фон ховеров */
+  --text: #e5e7eb; /* основной текст */
+  --muted: #9ca3af; /* вторичный текст */
+  --border: #374151; /* линии/сепараторы */
+  --primary: #60a5fa;
+  --text-muted: #9ca3af;
+}
+
+/* Базовый фон/цветы */
+html,
+body,
+#root {
+  height: 100%;
+}
+html,
+body,
+#root,
+.app {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Общие линии и бордеры */
+hr,
+.divider {
+  background: var(--border) !important;
+}
+
+/* Карточки постов (перекроем цвета из CSS-модулей) */
+:root[data-theme='dark'] [class*='card'] {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+}
+:root[data-theme='dark'] [class*='title'],
+:root[data-theme='dark'] [class*='titleLink'] {
+  color: var(--text) !important;
+}
+:root[data-theme='dark'] [class*='meta'],
+:root[data-theme='dark'] [class*='date'],
+:root[data-theme='dark'] [class*='text'] {
+  color: var(--muted) !important;
+}
+:root[data-theme='dark'] [class*='divider'] {
+  background: var(--border) !important;
+}
+
+/* Правая колонка — строки-линки с нижним разделителем */
+:root[data-theme='dark'] [class*='rightRow'] {
+  border-bottom: 1px solid var(--border) !important;
+}
+
+/* Пагинация/футер — линии под цвет темы */
+:root[data-theme='dark'] footer {
+  border-top-color: var(--border) !important;
+}

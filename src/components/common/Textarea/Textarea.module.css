@@ -1,0 +1,57 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.label {
+  font-size: 14px;
+  color: var(--text-muted);
+  user-select: none;
+}
+.req {
+  color: var(--error, #ef4444);
+}
+
+.textarea {
+  width: 100%;
+  min-height: 140px; /* близко к макету */
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  color: #111827;
+  font-size: 16px;
+  line-height: 22px;
+  resize: vertical; /* можно тянуть вниз */
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.textarea::placeholder {
+  color: var(--text-muted);
+} /* gray-400 */
+.textarea:focus {
+  outline: none;
+  border-color: var(--primary); /* blue-500 */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.isDisabled .textarea {
+  background: var(--surface-2, #f3f4f6); /* gray-100 */
+  border-color: var(--border); /* gray-200 */
+  color: var(--text-muted);
+}
+
+.isError .textarea {
+  border-color: var(--error, #ef4444); /* red-500 */
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.error {
+  font-size: 12px;
+  color: var(--error, #ef4444);
+  margin-top: 4px;
+}

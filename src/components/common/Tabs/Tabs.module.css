@@ -1,0 +1,55 @@
+/* Табы с слайдером во всю длину как в Figma */
+.tabs {
+  position: relative;
+  display: flex;
+  gap: 32px;
+  width: 100%;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Кнопки табов */
+.tabBtn {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.tabBtn:hover {
+  color: var(--text);
+}
+
+.tabBtn[aria-selected='true'] {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Текст таба */
+.label {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 12px;
+  line-height: 1.4;
+  font-size: 16px;
+}
+
+/* Слайдер под активным табом - во всю длину */
+.tabBtn[aria-selected='true'] .label::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -13px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 1px;
+}
+
+/* Темная тема */
+:root[data-theme='dark'] .tabs {
+  border-bottom-color: var(--border);
+}
