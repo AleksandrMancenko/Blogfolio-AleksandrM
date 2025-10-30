@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Blogfolio-AleksandrM/static/css/main.af8fefbc.css",
+    "main.js": "/Blogfolio-AleksandrM/static/js/main.3026b018.js",
+    "index.html": "/Blogfolio-AleksandrM/index.html",
+    "main.af8fefbc.css.map": "/Blogfolio-AleksandrM/static/css/main.af8fefbc.css.map",
+    "main.3026b018.js.map": "/Blogfolio-AleksandrM/static/js/main.3026b018.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.af8fefbc.css",
+    "static/js/main.3026b018.js"
+  ]
+}
