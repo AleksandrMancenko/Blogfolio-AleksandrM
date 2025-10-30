@@ -231,9 +231,9 @@
   overflow: hidden;
 }
 
-/* Темная тема */
+/* Темная тема: карточка без дополнительного фона (на чистом фоне страницы) */
 :root[data-theme='dark'] .card {
-  background: var(--surface);
+  background: transparent;
 }
 
 :root[data-theme='dark'] .iconBtn:hover {
