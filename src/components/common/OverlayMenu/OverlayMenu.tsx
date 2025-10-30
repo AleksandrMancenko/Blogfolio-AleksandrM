@@ -42,9 +42,9 @@ export default function OverlayMenu({ open }: Props) {
           <Link className={styles.item} to="/" onClick={() => dispatch(closeMenu())}>
             Home
           </Link>
-          <a className={styles.item} href="#" onClick={(e) => e.preventDefault()}>
+          <button type="button" className={styles.item} onClick={() => dispatch(closeMenu())}>
             Add post
-          </a>
+          </button>
         </nav>
 
         <div className={styles.sep} />
