@@ -6,7 +6,8 @@
   border-radius: 12px;
   align-self: start;
   height: 100%;
-  transition: all 0.2s ease;
+  /* Избегаем анимации фона при переключении темы */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
