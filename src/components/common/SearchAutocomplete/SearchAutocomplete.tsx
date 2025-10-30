@@ -97,12 +97,7 @@ export default function SearchAutocomplete({
       />
 
       {shouldShowDropdown && (
-        <div
-          ref={dropdownRef}
-          className={styles.dropdown}
-          role="listbox"
-          id={listboxId}
-        >
+        <div ref={dropdownRef} className={styles.dropdown} role="listbox" id={listboxId}>
           {filteredSuggestions.map((suggestion) => (
             <div
               key={suggestion}

@@ -290,7 +290,7 @@ export default function AllPosts() {
       // Левая колонка: 4 средних поста, правая колонка: 8 маленьких постов
       return [null, arr.slice(0, 4), arr.slice(4, 12)];
     }
-  }, [filtered, currentPage, isFavView]);
+  }, [filtered, currentPage, isFavView, hasNextPage, hasPrevPage, totalPages]);
 
   if (postsErr)
     return (
