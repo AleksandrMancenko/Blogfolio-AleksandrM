@@ -34,10 +34,7 @@ export default function ImageUploader({
     }
   };
 
-  const handleRemove = () => {
-    setImages([]);
-    onChange(null);
-  };
+  // removal handled via onImageRemove from library, local helper is not needed
 
   const onError = (errors: any) => {
     console.error('Image upload error:', errors);

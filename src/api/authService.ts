@@ -1,4 +1,4 @@
-import { httpPost, httpGet } from './http';
+import { httpPost } from './http';
 
 const BASE =
   typeof window !== 'undefined' && /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)
@@ -18,7 +18,8 @@ type RegisterReq = { email: string; username: string; password: string };
 type RegisterRes = { email: string; username: string };
 
 // Activation types
-type ActivationReq = { uid: string; token: string };
+// kept for docs, not used directly
+// type ActivationReq = { uid: string; token: string };
 type ActivationRes = Record<string, unknown>;
 
 export async function signIn(data: JwtCreateReq) {

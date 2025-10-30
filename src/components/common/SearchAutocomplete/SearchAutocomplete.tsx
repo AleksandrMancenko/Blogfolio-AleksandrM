@@ -78,6 +78,7 @@ export default function SearchAutocomplete({
     }, 0);
   };
 
+  const listboxId = 'search-autocomplete-listbox';
   return (
     <div className={`${styles.container} ${className}`}>
       <input
@@ -91,17 +92,24 @@ export default function SearchAutocomplete({
         className={styles.input}
         aria-expanded={shouldShowDropdown}
         aria-haspopup="listbox"
+        aria-controls={shouldShowDropdown ? listboxId : undefined}
         role="combobox"
       />
 
       {shouldShowDropdown && (
-        <div ref={dropdownRef} className={styles.dropdown} role="listbox">
+        <div
+          ref={dropdownRef}
+          className={styles.dropdown}
+          role="listbox"
+          id={listboxId}
+        >
           {filteredSuggestions.map((suggestion) => (
             <div
               key={suggestion}
               className={styles.suggestion}
               onClick={() => handleSuggestionClick(suggestion)}
               role="option"
+              aria-selected={false}
             >
               <span className={styles.suggestionText}>{suggestion}</span>
             </div>

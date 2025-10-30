@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { Post } from '../../api/posts.types';
-import type { RootState, AppDispatch } from '../../store';
+import type { RootState } from '../../store';
 import { get } from '../../api/student';
 import { createPost, updatePost, deletePost } from '../../api/postsService';
 import { addNotification } from '../notifications/notificationSlice';
