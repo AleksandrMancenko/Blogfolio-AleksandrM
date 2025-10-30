@@ -2,7 +2,7 @@
   display: grid;
   gap: 16px;
   padding: 20px;
-  background: var(--surface);
+  background: transparent;
   border-radius: 12px;
   align-self: start;
   height: 100%;

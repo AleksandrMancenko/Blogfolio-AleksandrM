@@ -40,7 +40,12 @@ hr,
   background: var(--border) !important;
 }
 
-/* Карточки: не навязываем общий фон, оставляем прозрачным по умолчанию */
+/* Карточки: прозрачные по умолчанию; в светлой теме задаём surface */
+:root:not([data-theme='dark']) [class*='card'],
+:root[data-theme='light'] [class*='card'] {
+  background: var(--surface) !important;
+}
+
 :root[data-theme='dark'] [class*='card'] {
   background: transparent !important;
   color: var(--text) !important;
