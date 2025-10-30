@@ -232,15 +232,23 @@ export default function AllPosts() {
       )}
 
       <nav className={styles.pagination} aria-label="Pagination">
-        <span className={styles.prev}>← Prev</span>
+        <button type="button" className={styles.prev} disabled>
+          ← Prev
+        </button>
         <div className={styles.pages}>
-          <a href="#" aria-current="page">
+          <button type="button" aria-current="page" className={styles.pageBtn}>
             1
-          </a>
-          <a href="#">2</a>
-          <a href="#">3</a>
+          </button>
+          <button type="button" className={styles.pageBtn} disabled>
+            2
+          </button>
+          <button type="button" className={styles.pageBtn} disabled>
+            3
+          </button>
         </div>
-        <span className={styles.next}>Next →</span>
+        <button type="button" className={styles.next} disabled>
+          Next →
+        </button>
       </nav>
     </div>
   );
