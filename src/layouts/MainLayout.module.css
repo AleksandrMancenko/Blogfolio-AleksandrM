@@ -1,22 +1,39 @@
-:root{
-  --hdr:56px;
-  --ftr:48px;
+:root {
+  --hdr: 56px;
+  --ftr: 48px;
 }
 
-.app{
-  display:flex;
-  flex-direction:column;
-  min-height:100dvh;           /* dvh стабильнее на мобильных */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh; /* dvh стабильнее на мобильных */
 }
 
 /* Серый фон ТОЛЬКО под основным контентом на auth-страницах */
-.isAuth .main{
-  background:#f3f4f6;
+.isAuth .main {
+  background: #f3f4f6;
 }
 /* всё остальное как было через composes */
-.header      { composes: app__header from "../index.css"; }
-.headerInner { composes: app__header-inner from "../index.css"; }
-.logo        { composes: app__logo from "../index.css"; }
-.main        { composes: app__main from "../index.css"; }
-.footer      { composes: app__footer from "../index.css"; border-top:1px solid #E5E7EB; background:transparent; }
-.footerRow   { max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; }
+.header {
+  composes: app__header from '../index.css';
+}
+.headerInner {
+  composes: app__header-inner from '../index.css';
+}
+.logo {
+  composes: app__logo from '../index.css';
+}
+.main {
+  composes: app__main from '../index.css';
+}
+.footer {
+  composes: app__footer from '../index.css';
+  border-top: 1px solid #e5e7eb;
+  background: transparent;
+}
+.footerRow {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}

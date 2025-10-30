@@ -1,24 +1,24 @@
-import { Outlet, useLocation } from "react-router-dom";
-import styles from "./MainLayout.module.css";
-import Header from "../components/common/Header/Header";
-import OverlayMenu from "../components/common/OverlayMenu/OverlayMenu";
-import ImagePreview from "../components/common/ImagePreview/ImagePreview";
-import { useEffect } from "react";
-import { useAppSelector } from "../store/hooks";
-import { selectMenuOpen, selectTheme } from "../features/ui/uiSlice";
+import { Outlet, useLocation } from 'react-router-dom';
+import styles from './MainLayout.module.css';
+import Header from '../components/common/Header/Header';
+import OverlayMenu from '../components/common/OverlayMenu/OverlayMenu';
+import ImagePreview from '../components/common/ImagePreview/ImagePreview';
+import { useEffect } from 'react';
+import { useAppSelector } from '../store/hooks';
+import { selectMenuOpen, selectTheme } from '../features/ui/uiSlice';
 
-export default function MainLayout () {
+export default function MainLayout() {
   const { pathname } = useLocation();
   const isAuth = /^\/(signin|signup|success)(\/|$)/.test(pathname);
   const menuOpen = useAppSelector(selectMenuOpen);
-  const theme    = useAppSelector(selectTheme);
+  const theme = useAppSelector(selectTheme);
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
   return (
-    <div className={`${styles.app} ${isAuth ? styles.isAuth : ""}`}>
+    <div className={`${styles.app} ${isAuth ? styles.isAuth : ''}`}>
       <Header />
 
       <main className={styles.main}>
