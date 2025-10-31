@@ -2,11 +2,11 @@
   display: grid;
   gap: 16px;
   padding: 20px;
-  background: var(--surface);
+  background: transparent;
   border-radius: 12px;
   align-self: start;
   height: 100%;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
@@ -232,10 +232,6 @@
 }
 
 /* Темная тема */
-:root[data-theme='dark'] .card {
-  background: var(--surface);
-}
-
 :root[data-theme='dark'] .iconBtn:hover {
   background: rgba(255, 255, 255, 0.05);
 }
