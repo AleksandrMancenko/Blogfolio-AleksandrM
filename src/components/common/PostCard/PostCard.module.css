@@ -70,6 +70,7 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-height: 1.3;
+  min-height: calc(1.3em * 2); /* Фиксированная высота для 2 строк */
 }
 
 .titleLink:hover {
@@ -238,60 +239,103 @@
 
 /* === Mobile: unify all card variants === */
 @media (max-width: 480px) {
-  .wide {
-    grid-template-columns: 1fr;
-    column-gap: 0;
-  }
+  /* Медиа сверху, контент снизу - единый порядок */
   .wide .media {
-    aspect-ratio: 16/9;
+    order: 1;
+  }
+  .wide .content {
+    order: 2;
+  }
+  .wide .actions {
+    order: 3;
   }
 
-  .compact {
-    grid-template-columns: 1fr;
-    column-gap: 0;
-    padding: 16px;
-  }
   .compact .media {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16/9;
+    order: 1;
+  }
+  .compact .content {
+    order: 2;
+  }
+  .compact .actions {
+    order: 3;
   }
   .compact .title,
   .compact .titleLink {
     font-size: 18px;
+    min-height: calc(1.3em * 2); /* Такая же высота как у остальных */
   }
 
   .featured .media {
-    aspect-ratio: 16/9;
+    order: 1;
+  }
+  .featured .content {
+    order: 2;
+  }
+  .featured .actions {
+    order: 3;
+  }
+  .featured .title,
+  .featured .titleLink {
+    font-size: 18px;
+    min-height: calc(1.3em * 2); /* Такая же высота как у остальных */
   }
 }
 
 /* === Tablet: also unify to single-column for visual consistency === */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  /* Все карточки: медиа сверху, контент снизу */
   .wide {
     grid-template-columns: 1fr;
     column-gap: 0;
   }
   .wide .media {
+    order: 1;
     aspect-ratio: 16/9;
+  }
+  .wide .content {
+    order: 2;
+  }
+  .wide .actions {
+    order: 3;
   }
 
   .compact {
     grid-template-columns: 1fr;
     column-gap: 0;
     padding: 16px;
+    align-items: stretch;
   }
   .compact .media {
+    order: 1;
     width: 100%;
     height: auto;
     aspect-ratio: 16/9;
   }
+  .compact .content {
+    order: 2;
+  }
+  .compact .actions {
+    order: 3;
+  }
   .compact .title,
   .compact .titleLink {
-    font-size: 18px;
+    font-size: 20px;
+    min-height: calc(1.3em * 2); /* Такая же высота как у остальных */
   }
 
   .featured .media {
+    order: 1;
     aspect-ratio: 16/9;
+  }
+  .featured .content {
+    order: 2;
+  }
+  .featured .actions {
+    order: 3;
+  }
+  .featured .title,
+  .featured .titleLink {
+    font-size: 20px;
+    min-height: calc(1.3em * 2); /* Такая же высота как у остальных */
   }
 }
