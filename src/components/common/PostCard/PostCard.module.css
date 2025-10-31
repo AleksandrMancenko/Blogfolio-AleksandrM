@@ -235,3 +235,33 @@
 :root[data-theme='dark'] .iconBtn:hover {
   background: rgba(255, 255, 255, 0.05);
 }
+
+/* === Mobile: unify all card variants === */
+@media (max-width: 480px) {
+  .wide {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+  .wide .media {
+    aspect-ratio: 16/9;
+  }
+
+  .compact {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    padding: 16px;
+  }
+  .compact .media {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+  }
+  .compact .title,
+  .compact .titleLink {
+    font-size: 18px;
+  }
+
+  .featured .media {
+    aspect-ratio: 16/9;
+  }
+}
