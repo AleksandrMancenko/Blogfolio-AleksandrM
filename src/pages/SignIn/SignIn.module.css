@@ -100,25 +100,34 @@
   text-align: center;
 }
 
-/* Менее яркая кнопка на формах авторизации */
-/* Удалено: возвращаем акцент кнопки к базовому стилю компонента */
-
-/* Ссылка Sign Up менее яркая */
-/* Удалено: используем базовые цвета ссылок */
+/* Менее яркая кнопка на формах авторизации - тот же цвет, но с пониженной яркостью */
+.submit :where(button[data-variant='primary']) {
+  opacity: 0.9;
+}
+.submit :where(button[data-variant='primary']:hover) {
+  opacity: 1;
+}
 
 /* Мобильная адаптация */
 @media (max-width: 480px) {
   .screen {
     place-content: start center;
-    padding: 64px 12px 24px;
+    padding: 48px 12px 24px;
+  }
+  .wrap {
+    width: 100%;
+    max-width: 360px;
   }
   .title {
-    font-size: 24px;
+    font-size: 22px;
     margin-bottom: 12px;
   }
   .form {
-    padding: 14px;
+    padding: 16px;
     border-radius: 8px;
+  }
+  .back {
+    font-size: 11px;
   }
   .row {
     margin-top: 6px;
