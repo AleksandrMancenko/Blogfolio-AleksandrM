@@ -92,6 +92,13 @@
   width: 100%;
 }
 
+/* Единый вид disabled-кнопки на формах авторизации */
+.submit :where(button:disabled) {
+  background: var(--surface-2);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
 /* Подпись под кнопкой */
 .note {
   margin-top: 12px;

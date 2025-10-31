@@ -45,6 +45,12 @@
   width: 100%;
   display: block;
 }
+/* Единый вид disabled-кнопки на формах регистрации */
+.submit :where(button:disabled) {
+  background: var(--surface-2);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
 /* Менее яркая кнопка на формах регистрации - тот же цвет, но с пониженной яркостью */
 .submit :where(button[data-variant='primary']) {
   opacity: 0.9;
