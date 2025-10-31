@@ -12,11 +12,11 @@
 .breadcrumbs {
   margin: 0 0 16px;
   font-size: 12px;
-  color: #6b7280; /* muted */
+  color: var(--text-muted);
   text-align: left;
 }
 .breadcrumbLink {
-  color: #6b7280;
+  color: var(--text-muted);
   text-decoration: none;
 }
 .breadcrumbLink:hover {
@@ -30,7 +30,7 @@
   font-size: 40px;
   line-height: 1.2;
   font-weight: 700;
-  color: #111827; /* заголовок потемнее */
+  color: var(--text);
 }
 
 .image {
@@ -44,7 +44,7 @@
   max-width: 760px;
   margin: 0 auto 24px;
   line-height: 1.7;
-  color: #374151; /* текст */
+  color: var(--text);
   text-align: left;
 }
 .content p {
@@ -80,15 +80,15 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  border: 1px solid #e5e7eb;
-  background: #f3f4f6; /* светло-серый фон */
-  color: #6b7280;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-muted);
   border-radius: 8px;
   cursor: pointer;
 }
 .iconBtn:hover {
-  background: #e9ecef;
-  color: #111827;
+  background: var(--border);
+  color: var(--text);
 }
 .icon {
   width: 20px;
@@ -101,9 +101,9 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid #e5e7eb;
-  background: #f3f4f6;
-  color: #111827;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
   padding: 8px 12px;
   border-radius: 8px;
   cursor: pointer;
@@ -117,12 +117,12 @@
   justify-content: space-between;
   align-items: center;
 
-  border-top: 1px solid #e5e7eb; /* сепараторы */
-  border-bottom: 1px solid #e5e7eb;
+  border-top: 1px solid var(--border); /* сепараторы */
+  border-bottom: 1px solid var(--border);
   padding: 12px 0;
 }
 .navLink {
-  color: #6b7280;
+  color: var(--text-muted);
   text-decoration: none;
 }
 .navLink:hover {
@@ -137,12 +137,51 @@
   gap: 16px;
   margin-bottom: 24px;
   font-size: 14px;
-  color: #6b7280;
+  color: var(--text-muted);
 }
 
 .lesson {
-  background: #f3f4f6;
+  background: var(--surface-2);
   padding: 4px 8px;
   border-radius: 4px;
   font-weight: 500;
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+  .page {
+    padding: 24px 12px;
+  }
+  .title {
+    font-size: 28px;
+  }
+  .actions {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 16px 12px;
+  }
+  .title {
+    font-size: 24px;
+  }
+  .content {
+    font-size: 15px;
+  }
+  .meta {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .left {
+    width: 100%;
+    justify-content: space-between;
+  }
 }

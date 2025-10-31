@@ -86,3 +86,36 @@
   color: #111827;
   border-color: var(--border, #334155);
 }
+
+/* Адаптив */
+@media (max-width: 640px) {
+  .header {
+    padding: 0 12px;
+    gap: 8px;
+  }
+  .search {
+    max-width: 200px;
+  }
+  .userName {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 0 8px;
+    gap: 6px;
+  }
+  .search {
+    max-width: 150px;
+  }
+  .iconBtn,
+  .searchBtn {
+    width: 32px;
+    height: 32px;
+  }
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
+}

@@ -298,4 +298,50 @@
   .pageTitle {
     font-size: 24px;
   }
+
+  .sortControls {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .sortLabel {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .gridLayout {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .pages button {
+    min-width: 28px;
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 360px) {
+  .page {
+    padding: 12px 8px 24px;
+  }
+
+  .pageTitle {
+    font-size: 22px;
+  }
+
+  .pagination {
+    gap: 4px;
+  }
+
+  .pages button {
+    min-width: 24px;
+    padding: 4px 8px;
+    font-size: 12px;
+  }
 }
