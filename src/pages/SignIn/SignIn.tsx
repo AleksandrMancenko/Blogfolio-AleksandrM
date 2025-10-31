@@ -80,6 +80,7 @@ export default function SignIn() {
               required
               errorText={emailErr}
               disabled={isLoading}
+              autoComplete="username"
             />
 
             <Input
@@ -91,6 +92,7 @@ export default function SignIn() {
               placeholder="Your password"
               required
               disabled={isLoading}
+              autoComplete="current-password"
             />
 
             {/* Ссылка слева под полями */}

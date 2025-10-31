@@ -71,6 +71,7 @@ export default function SignUp() {
               onChange={setName}
               placeholder="Your name"
               required
+              autoComplete="name"
             />
             <Input
               id="su-email"
@@ -81,6 +82,7 @@ export default function SignUp() {
               placeholder="Your email"
               required
               errorText={emailErr}
+              autoComplete="email"
             />
             <Input
               id="su-pass"
@@ -90,6 +92,7 @@ export default function SignUp() {
               onChange={setPass}
               placeholder="Your password"
               required
+              autoComplete="new-password"
             />
             <Input
               id="su-pass2"
@@ -100,6 +103,7 @@ export default function SignUp() {
               placeholder="Confirm password"
               required
               errorText={passErr}
+              autoComplete="new-password"
             />
 
             <div className={styles.submit}>
