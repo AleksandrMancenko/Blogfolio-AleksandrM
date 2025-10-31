@@ -1,8 +1,11 @@
 .screen {
   min-height: calc(100dvh - 56px - 48px);
-  /* background: var(--bg); */
+  background: var(--bg);
   display: grid;
-  place-items: center;
+  place-content: start center;
+  padding: 96px 16px 32px;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 }
 .wrap {
   width: 520px;
@@ -56,6 +59,14 @@
   color: var(--muted);
   text-align: center;
 }
+.note :where(a) {
+  color: #ef4444;
+  text-decoration: none;
+}
+.note :where(a:hover) {
+  color: #dc2626;
+  text-decoration: underline;
+}
 
 .errorMessage {
   padding: 12px;
@@ -70,7 +81,7 @@
 /* Мобильная адаптация */
 @media (max-width: 480px) {
   .screen {
-    place-items: start center;
+    place-content: start center;
     padding: 48px 12px 24px;
   }
   .wrap {

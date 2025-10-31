@@ -117,7 +117,7 @@ export default function OverlayMenu({ open }: Props) {
                 Log Out
               </button>
             ) : (
-              <Link className={styles.item} to="/signin" onClick={() => dispatch(closeMenu())}>
+              <Link className={`${styles.item} ${styles.accentLink}`} to="/signin" onClick={() => dispatch(closeMenu())}>
                 Sign In
               </Link>
             )}

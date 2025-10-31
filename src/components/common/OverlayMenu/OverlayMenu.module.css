@@ -110,6 +110,12 @@
 .bottom {
   margin-top: auto;
 }
+.accentLink {
+  color: #ef4444;
+}
+.accentLink:hover {
+  background: rgba(239, 68, 68, 0.12);
+}
 .themeBtn {
   display: inline-flex;
   align-items: center;

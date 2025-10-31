@@ -99,6 +99,14 @@
   color: var(--text-muted);
   text-align: center;
 }
+.note :where(a) {
+  color: #ef4444;
+  text-decoration: none;
+}
+.note :where(a:hover) {
+  color: #dc2626;
+  text-decoration: underline;
+}
 
 /* Менее яркая кнопка на формах авторизации - тот же цвет, но с пониженной яркостью */
 .submit :where(button[data-variant='primary']) {
