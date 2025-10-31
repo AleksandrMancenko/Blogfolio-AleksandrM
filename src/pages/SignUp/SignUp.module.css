@@ -39,7 +39,7 @@
   gap: 12px;
 }
 .submit {
-  margin-top: 4px;
+  margin-top: 12px;
 }
 .submit :where(button) {
   width: 100%;
