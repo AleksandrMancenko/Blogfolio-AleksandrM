@@ -100,6 +100,26 @@
   text-align: center;
 }
 
+/* Менее яркая кнопка на формах авторизации */
+.submit :where(button[data-variant='primary']) {
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.submit :where(button[data-variant='primary']:hover) {
+  background: color-mix(in srgb, var(--surface-2) 92%, black);
+}
+
+/* Ссылка Sign Up менее яркая */
+.link {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+.link:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
 /* Мобильная адаптация */
 @media (max-width: 480px) {
   .screen {
@@ -110,7 +130,7 @@
     margin-bottom: 12px;
   }
   .form {
-    padding: 16px;
+    padding: 14px;
     border-radius: 8px;
   }
   .row {

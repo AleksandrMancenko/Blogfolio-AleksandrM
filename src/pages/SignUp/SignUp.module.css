@@ -42,11 +42,28 @@
   width: 100%;
   display: block;
 }
+/* Менее яркая кнопка на формах регистрации */
+.submit :where(button[data-variant='primary']) {
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.submit :where(button[data-variant='primary']:hover) {
+  background: color-mix(in srgb, var(--surface-2) 92%, black);
+}
 .note {
   margin-top: 10px;
   font-size: 12px;
   color: var(--muted);
   text-align: center;
+}
+.note :where(a) {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+.note :where(a:hover) {
+  color: var(--text);
+  text-decoration: underline;
 }
 
 .errorMessage {
@@ -57,4 +74,28 @@
   color: #dc2626;
   font-size: 14px;
   text-align: center;
+}
+
+/* Мобильная адаптация */
+@media (max-width: 480px) {
+  .screen {
+    place-items: start center;
+    padding: 72px 12px 24px;
+  }
+  .wrap {
+    width: 520px;
+    max-width: 100%;
+    transform: translateY(0);
+  }
+  .title {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  .form {
+    padding: 14px;
+    border-radius: 8px;
+  }
+  .note {
+    font-size: 11px;
+  }
 }
