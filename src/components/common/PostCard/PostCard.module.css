@@ -265,3 +265,33 @@
     aspect-ratio: 16/9;
   }
 }
+
+/* === Tablet: also unify to single-column for visual consistency === */
+@media (max-width: 768px) {
+  .wide {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+  .wide .media {
+    aspect-ratio: 16/9;
+  }
+
+  .compact {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    padding: 16px;
+  }
+  .compact .media {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+  }
+  .compact .title,
+  .compact .titleLink {
+    font-size: 18px;
+  }
+
+  .featured .media {
+    aspect-ratio: 16/9;
+  }
+}
